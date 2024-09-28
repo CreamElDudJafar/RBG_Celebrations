@@ -1,0 +1,744 @@
+TrainerDataPointers:
+	table_width 2, TrainerDataPointers
+	dw YoungsterData
+	dw BugCatcherData
+	dw LassData
+	dw SailorData
+	dw JrTrainerMData
+	dw JrTrainerFData
+	dw PokemaniacData
+	dw SuperNerdData
+	dw HikerData
+	dw BikerData
+	dw BurglarData
+	dw EngineerData
+	dw UnusedJugglerData
+	dw FisherData
+	dw SwimmerData
+	dw CueBallData
+	dw GamblerData
+	dw BeautyData
+	dw PsychicData
+	dw RockerData
+	dw JugglerData
+	dw TamerData
+	dw BirdKeeperData
+	dw BlackbeltData
+	dw Green1Data
+	dw ProfOakData
+	dw ChiefData
+	dw ScientistData
+	dw GiovanniData
+	dw RocketData
+	dw CooltrainerMData
+	dw CooltrainerFData
+	dw BrunoData
+	dw BrockData
+	dw MistyData
+	dw LtSurgeData
+	dw ErikaData
+	dw KogaData
+	dw BlaineData
+	dw SabrinaData
+	dw GentlemanData
+	dw Green2Data
+	dw Green3Data
+	dw LoreleiData
+	dw ChannelerData
+	dw AgathaData
+	dw LanceData
+	assert_table_length NUM_TRAINERS
+
+; if first byte != $FF, then
+	; first byte is level (of all pokemon on this team)
+	; all the next bytes are pokemon species
+	; null-terminated
+; if first byte == $FF, then
+	; first byte is $FF (obviously)
+	; every next two bytes are a level and species
+	; null-terminated
+
+YoungsterData:
+; Route 3
+	db 11, RATTATA, EKANS, 0
+	db 14, SPEAROW, 0
+; Mt. Moon 1F
+	db 10, DIGLETT, SPEAROW, ZUBAT, 0
+; Route 24
+	db 14, MANKEY, DODUO, KRABBY, 0
+; Route 25
+	db 15, RATTATA, SPEAROW, 0
+	db 17, SLOWPOKE, 0
+	db 14, EKANS, SANDSHREW, 0
+; SS Anne 1F Rooms
+	db 22, NIDORINO, 0
+; Route 11
+	db 21, GRIMER, KRABBY, 0
+	db 19, SANDSHREW, BUTTERFREE, 0 
+	db 19, PIDGEOTTO, STARYU, RATICATE, 0 
+	db 18, PONYTA, NIDORINO, 0
+; Unused
+	db 17, SPEAROW, RATTATA, RATTATA, SPEAROW, 0
+
+BugCatcherData:
+; Viridian Forest
+	db 7, WEEDLE, CATERPIE, 0
+	db 7, WEEDLE, KAKUNA, VENONAT, 0
+	db 8, PINSIR, 0
+; Route 3
+	db 10, CATERPIE, WEEDLE, KAKUNA, 0 
+	db 9, WEEDLE, KAKUNA, VENONAT, METAPOD, 0 
+	db 12, CATERPIE, METAPOD, 0
+; Mt. Moon 1F
+	db 11, PARAS, KAKUNA, 0
+	db 10, KAKUNA, METAPOD, PARAS, 0 
+; Route 24
+	db 18, METAPOD, BEEDRILL, 0 
+; Route 6
+	db 20, VENONAT, CATERPIE, WEEDLE, 0 
+	db 20, BUTTERFREE, 0 
+; Unused
+	db 18, METAPOD, CATERPIE, VENONAT, 0
+; Route 9
+	db 24, BEEDRILL, BUTTERFREE, 0
+	db 23, VENOMOTH, SCYTHER, PINSIR, 0
+
+LassData:
+; Route 3
+	db 9, NIDORAN_F, PIDGEY, 0 
+	db 10, SQUIRTLE, NIDORAN_M, 0 
+	db 14, JIGGLYPUFF, 0
+; Route 4
+	db 31, PARAS, PARAS, PARASECT, 0
+; Mt. Moon 1F
+	db 11, ODDISH, BELLSPROUT, 0 
+	db 14, CLEFAIRY, 0 
+; Route 24
+	db 16, EEVEE, PONYTA, 0 
+	db 15, NIDORAN_F, BULBASAUR, 0 
+; Route 25
+		db 17, NIDORINA, NIDORAN_F, 0 
+	db 16, ODDISH, JIGGLYPUFF, SEEL, 0 
+; SS Anne 1F Rooms
+	db 21, PSYDUCK, EEVEE, 0
+; SS Anne 2F Rooms
+	db 18, RATTATA, PIKACHU, 0
+; Route 8
+	db 28, NIDORAN_F, NIDORINA, 0 
+	db 26, MEOWTH, FARFETCHD, EEVEE, 0 
+	db 25, ARBOK, SLOWPOKE, VULPIX, MEOWTH, PIKACHU, 0 
+	db 28, CLEFAIRY, CLEFABLE, 0 
+; Celadon Gym
+	db 31, NIDORINA, WEEPINBELL, 0
+	db 31, CHANSEY, GLOOM, 0
+
+SailorData:
+; SS Anne Stern
+	db 22, SEEL, KRABBY, 0
+	db 22, MACHOP, TENTACOOL, 0
+; SS Anne B1F Rooms
+	db 21, SHELLDER, 0 
+	db 20, HORSEA, KRABBY, PSYDUCK, 0
+	db 22, TENTACOOL, STARYU, 0 
+	db 20, SEEL, GOLDEEN, POLIWHIRL, 0
+	db 21, MACHOP, 0
+; Vermilion Gym
+	db 21, PIKACHU, MAGNEMITE, 0
+
+JrTrainerMData:
+; Pewter Gym
+	db 11, DIGLETT, SANDSHREW, 0
+; Route 24/Route 25
+	db 14, RATTATA, EKANS, 0
+; Route 24
+	db 18, MANKEY, 0
+; Route 6
+	db 20, SQUIRTLE, 0
+	db 16, SPEAROW, RATICATE, 0
+; Unused
+	db 22, DIGLETT, DIGLETT, FARFETCHD, 0
+; Route 9
+	db 25, RHYHORN, CHARMELEON, 0
+	db 24, KRABBY, DIGLETT, PIDGEOTTO, VULPIX, 0
+; Route 12
+	db 34, JOLTEON, NIDORINO, 0
+
+JrTrainerFData:
+; Cerulean Gym
+	db 19, GOLDEEN, 0
+; Route 6
+	db 18, RATTATA, PIKACHU, 0
+	db 18, PIDGEY, PIDGEOTTO, NIDORAN_F, 0
+; Unused
+	db 22, BULBASAUR, 0
+; Route 9
+	db 23, ODDISH, BELLSPROUT, DODUO, GLOOM, 0
+	db 26, CHANSEY, 0
+; Route 10
+	db 20, PIKACHU, CLEFAIRY, 0
+	db 21, PIDGEY, PIDGEOTTO, 0
+; Rock Tunnel B1F
+	db 21, JIGGLYPUFF, PIDGEY, MEOWTH, 0
+	db 22, ODDISH, BULBASAUR, 0
+; Celadon Gym
+	db 24, BULBASAUR, IVYSAUR, 0
+; Route 13
+	db 34, RAICHU, VILEPLUME, BUTTERFREE, CHANSEY, LICKITUNG, 0
+	db 36, POLIWHIRL, WIGGLYTUFF, 0
+	db 37, NIDORINA, MEOWTH, TANGELA, PIDGEOTTO, 0
+	db 38, VAPOREON, POLIWHIRL, SEADRA, 0
+; Route 20
+	db 41, WIGGLYTUFF, SEAKING, 0
+; Rock Tunnel 1F
+	db 22, BELLSPROUT, CLEFAIRY, 0
+	db 20, MEOWTH, ODDISH, PIDGEY, 0
+	db 26, BELLSPROUT, NIDORINA, ABRA, IVYSAUR, 0 
+; Route 15
+	db 38, GLOOM, VILEPLUME, NIDORINO, 0
+	db 39, MAGNETON, RAICHU, 0
+	db 33, CLEFABLE, 0
+	db 39, VICTREEBEL, VILEPLUME, TANGELA, 0
+; Route 20
+	db 40, TENTACRUEL, SEADRA, SEEL, 0
+
+PokemaniacData:
+; Route 10
+	db 30, RHYHORN, LICKITUNG, 0
+	db 20, CUBONE, SLOWPOKE, 0
+; Rock Tunnel B1F
+	db 26, SLOWPOKE, PONYTA, EXEGGCUTE, 0 
+	db 26, CUBONE, CHARMELEON, 0 
+	db 27, SLOWPOKE, 0
+; Victory Road 2F
+	db 48,  EXEGGUTOR, LAPRAS, LICKITUNG, 0
+; Rock Tunnel 1F
+	db 23, CUBONE, SLOWPOKE, 0
+
+SuperNerdData:
+; Mt. Moon 1F
+	db 11, MAGNEMITE, VOLTORB, 0
+; Mt. Moon B2F
+	db 12, GRIMER, VOLTORB, KOFFING, 0
+; Route 8
+	db 27, VOLTORB, KOFFING, PSYDUCK, MAGNEMITE, 0 
+	db 27, GRIMER, MR_MIME, MUK, 0
+	db 29, KOFFING, 0
+; Unused
+	db 22, KOFFING, MAGNEMITE, WEEZING, 0
+	db 20, MAGNEMITE, MAGNEMITE, KOFFING, MAGNEMITE, 0
+	db 24, MAGNEMITE, VOLTORB, 0
+; Cinnabar Gym
+	db 44, GOLEM, PORYGON, NINETALES, 0
+	db 44, FLAREON, CHARMELEON, VULPIX, PRIMEAPE, 0
+	db 44, RAPIDASH, 0
+	db 43, MAGMAR, VULPIX, 0
+
+HikerData:
+; Mt. Moon 1F
+	db 10, GEODUDE, MANKEY, ONIX, 0
+; Route 25
+	db 16, RHYHORN, GEODUDE, 0 
+	db 16, GEODUDE, CUBONE, MACHOP, MANKEY, 0 
+	db 17, RHYHORN, 0 
+; Route 9
+	db 25, GRAVELER, ONIX, 0
+	db 24, GEODUDE, DIGLETT, RHYHORN, 0
+; Route 10
+	db 27, SANDSLASH, ONIX, 0 
+	db 26, MAROWAK, GRAVELER, 0
+; Rock Tunnel B1F
+	db 26, HITMONCHAN, SANDSLASH, GRAVELER, 0
+	db 28, HITMONLEE, 0
+; Route 9/Rock Tunnel B1F
+	db 25, SANDSLASH, ONIX, 0 
+; Rock Tunnel 1F
+	db 25, GEODUDE, MACHOP, GRAVELER, CUBONE, 0 
+	db 26, ONIX, SANDSLASH, GEODUDE, 0 
+	db 27, MANKEY, GRAVELER, 0
+
+BikerData:
+; Route 13
+	db 38, WEEZING, GRIMER, KOFFING, 0
+; Route 14
+	db 38, WEEZING, GRIMER, 0
+; Route 15
+	db 35, WEEZING, VICTREEBEL, PINSIR, HAUNTER, MUK, 0
+	db 38, KOFFING, GRIMER, WEEZING, 0
+; Route 16
+	db 36, MUK, WEEZING, 0
+	db 36, WEEZING, 0
+	db 36, KOFFING, MUK, WEEZING, VENOMOTH, 0
+; Route 17
+	; From https://www.smogon.com/smog/issue27/glitch:
+	; 0E:5FC2 is offset of the ending 0 for this first Biker on Route 17.
+	; BaseStats + (BASE_DATA_SIZE) * (000 - 1) = $5FC2;
+	; that's the formula from GetMonHeader for the base stats of mon #000.
+	; (BaseStats = $43DE and BANK(BaseStats) = $0E.)
+	; Finally, PokedexOrder lists 0 as the dex ID for every MissingNo.
+	; The result is that this data gets interpreted as the base stats
+	; for MissingNo: 0, 33, MUK, 0, 29, VOLTORB, VOLTORB, 0, ..., 28, GRIMER, GRIMER.
+	db 34, WEEZING, KOFFING, WEEZING, 0
+	db 33, MUK, 0
+	db 33, VOLTORB, VOLTORB, 0
+	db 34, BEEDRILL, MUK, 0 
+	db 33, KOFFING, WEEZING, GRIMER, VENOMOTH, PARASECT, 0
+; Route 14
+	db 38, GASTLY, GRIMER, VENOMOTH, 0
+	db 38, GRIMER, PINSIR, KOFFING, 0
+	db 38, KOFFING, MUK, 0
+
+BurglarData:
+; Unused
+	db 29, GROWLITHE, VULPIX, 0
+	db 33, GROWLITHE, 0
+	db 28, VULPIX, CHARMANDER, PONYTA, 0
+; Cinnabar Gym
+	db 41, GROWLITHE, VULPIX, NINETALES, 0
+	db 41, MAGMAR, 0
+	db 37, VULPIX, GROWLITHE, 0
+; Mansion 2F
+	db 44, SANDSLASH, MAGMAR, 0
+; Mansion 3F
+	db 44, NINETALES, 0
+; Mansion B1F
+	db 44, RATICATE, WEEZING, 0
+
+EngineerData:
+; Unused
+	db 21, VOLTORB, MAGNEMITE, 0
+; Route 11
+	db 21, PORYGON, 0
+	db 18, MAGNEMITE, DODUO, MAGNETON, 0
+
+UnusedJugglerData:
+; none
+
+FisherData:
+; SS Anne 2F Rooms
+	db 17, GOLDEEN, TENTACOOL, SEEL, 0
+; SS Anne B1F Rooms
+	db 17, SHELLDER, STARYU, MACHOP, 0 
+; Route 12
+	db 22, GOLDEEN, POLIWAG, MAGIKARP, 0
+	db 24, TENTACOOL, GOLDEEN, 0
+	db 29, SEADRA, 0
+	db 21, POLIWAG, SHELLDER, GOLDEEN, MAGIKARP, 0
+; Route 21
+	db 38, SEADRA, POLIWHIRL, GOLDUCK, SEAKING, 0
+	db 41, KINGLER, CLOYSTER, 0
+	db 37, MAGIKARP, GYARADOS, GYARADOS, 0
+	db 43, SEAKING, GOLDUCK, 0
+; Route 12
+	db 34, MAGIKARP, GYARADOS, 0
+
+SwimmerData:
+; Cerulean Gym
+	db 16, HORSEA, SHELLDER, 0
+; Route 19
+	db 38, TENTACRUEL, SHELLDER, 0
+	db 38, GOLDEEN, SEADRA, STARYU, 0
+	db 41, POLIWRATH, POLIWHIRL, 0
+	db 38, HORSEA, TENTACOOL, CLOYSTER, GOLDEEN, 0
+	db 41, GYARADOS, TENTACRUEL, SEAKING, 0
+	db 41, SEADRA, STARMIE, 0
+	db 38, POLIWHIRL, GOLDUCK, STARYU, SEADRA, TENTACRUEL, 0
+; Route 20
+	db 41, DEWGONG, CLOYSTER, 0
+	db 44, STARMIE, 0
+	db 38, WARTORTLE, GYARADOS, SEADRA, HORSEA, 0
+; Route 21
+	db 43, SEADRA, TENTACRUEL, 0
+	db 47, STARMIE, 0
+	db 43, STARYU, WARTORTLE, 0
+	db 42, POLIWHIRL, GOLDUCK, SEADRA, 0
+
+CueBallData:
+; Route 16
+	db 36, MACHOKE, PARASECT, DUGTRIO, 0
+	db 36, PRIMEAPE, MUK, 0
+	db 36, GOLEM, 0
+; Route 17
+	db 33, MANKEY, PRIMEAPE, 0
+	db 34, MACHOP, MACHOKE, 0
+	db 33, POLIWHIRL, 0
+	db 34, MANKEY, PRIMEAPE, MACHOKE, MACHOP, 0
+	db 34, PRIMEAPE, MACHOKE, 0
+; Route 21
+	db 41, TENTACOOL, STARYU, TENTACRUEL, 0
+
+GamblerData:
+; Route 11
+	db 18, POLIWAG, HORSEA, 0
+	db 18, BELLSPROUT, ODDISH, 0
+	db 18, VOLTORB, MAGNEMITE, 0
+	db 18, GROWLITHE, VULPIX, 0
+; Route 8
+	db 22, POLIWAG, GRAVELER, POLIWHIRL, 0 
+; Unused
+	db 22, ONIX, GEODUDE, GRAVELER, 0
+; Route 8
+	db 24, GROWLITHE, VULPIX, 0
+
+BeautyData:
+; Celadon Gym
+	db 21, JIGGLYPUFF, BELLSPROUT, BUTTERFREE, TANGELA, 0
+	db 24, ODDISH, TANGELA, 0 
+	db 26, EXEGGCUTE, 0
+; Route 13
+	db 37, WIGGLYTUFF, PIKACHU, RAICHU, 0
+	db 39, CLEFAIRY, PERSIAN, 0
+; Route 20
+	db 42, DEWGONG, 0
+	db 40, SHELLDER, POLIWHIRL, CLOYSTER, 0
+	db 41, POLIWHIRL, SEAKING, 0
+; Route 15
+	db 39, PIDGEOTTO, WIGGLYTUFF, 0
+	db 39, IVYSAUR, VENUSAUR, 0
+; Unused
+	db 33, WEEPINBELL, BELLSPROUT, WEEPINBELL, 0
+; Route 19
+	db 38, STARMIE, POLIWHIRL, SEAKING, GOLDEEN, SHELLDER, 0
+	db 38, GOLDEEN, SEAKING, 0
+	db 41, STARYU, STARMIE, TENTACRUEL, 0
+; Route 20
+	db 40, SEADRA, DEWGONG, CLOYSTER, 0
+
+PsychicData:
+; Saffron Gym
+	db 41, KADABRA, SLOWPOKE, MR_MIME, VENOMOTH, 0
+	db 42, MR_MIME, KADABRA, 0
+	db 40, SLOWPOKE, BUTTERFREE, SLOWBRO, 0
+	db 41, SLOWBRO, 0
+
+RockerData:
+; Vermilion Gym
+	db 20, VOLTORB, MAGNEMITE, VOLTORB, 0
+; Route 12
+	db 32, VOLTORB, ELECTRODE, 0
+
+JugglerData:
+; Silph Co. 5F
+	db 29, KADABRA, MR_MIME, 0
+; Victory Road 2F
+	db 48, SCYTHER, HYPNO, ELECTABUZZ, JYNX, 0
+; Fuchsia Gym
+	db 41, HYPNO, BEEDRILL, KADABRA, GOLBAT, 0
+	db 40, STARMIE, MR_MIME, 0
+; Victory Road 2F
+	db 48, MR_MIME, 0
+; Unused
+	db 33, HYPNO, 0
+; Fuchsia Gym
+	db 40, HYPNO, 0
+	db 41, ARBOK, VENOMOTH, 0
+
+TamerData:
+; Fuchsia Gym
+	db 41, ARBOK, SANDSLASH, 0
+	db 42, NIDORINA, SANDSLASH, ARBOK, 0
+; Viridian Gym
+	db 48, RHYHORN, 0
+	db 47, ARBOK, TAUROS, 0
+; Victory Road 2F
+	db 47, HITMONCHAN, GOLDUCK, 0
+; Unused
+	db 42, RHYHORN, PRIMEAPE, ARBOK, TAUROS, 0
+
+BirdKeeperData:
+; Route 13
+	db 39, FARFETCHD, PIDGEOTTO, 0
+	db 35, SPEAROW, DODUO, DODRIO, FEAROW, PIDGEOTTO, 0
+	db 36, PIDGEY, PIDGEOTTO, SPEAROW, FEAROW, 0
+; Route 14
+	db 39, FARFETCHD, 0
+	db 39, PIDGEOTTO, BUTTERFREE, 0
+; Route 15
+	db 36, PIDGEOTTO, FARFETCHD, DODUO, FEAROW, 0
+	db 38, DODRIO, PIDGEOTTO, DODUO, 0
+; Route 18
+	db 33, SCYTHER, FEAROW, 0
+	db 34, DODRIO, 0
+	db 33, DODUO, PIDGEOTTO, FEAROW, SPEAROW, 0
+; Route 20
+	db 40, FEAROW, DODRIO, PIDGEOT, 0
+; Unused
+	db 39, PIDGEOTTO, PIDGEOTTO, PIDGEY, PIDGEOTTO, 0
+	db 42, FARFETCHD, FEAROW, 0
+; Route 14
+	db 38, PIDGEOTTO, DODUO, PIDGEOT, 0
+	db 36, BUTTERFREE, GOLBAT, DODUO, FEAROW, 0
+	db 39, PIDGEOTTO, DODRIO, 0
+	db 38, VENOMOTH, DODUO, FEAROW, 0
+
+BlackbeltData:
+; Fighting Dojo
+	db 37, HITMONLEE, HITMONCHAN, 0
+	db 31, MANKEY, MANKEY, PRIMEAPE, 0
+	db 32, MACHOP, MACHOKE, 0
+	db 36, PRIMEAPE, 0
+	db 31, MACHOP, MANKEY, PRIMEAPE, 0
+; Viridian Gym
+	db 48, HITMONLEE, HITMONCHAN, 0
+	db 47, GOLEM, 0
+	db 48, POLIWRATH, GOLEM, PRIMEAPE, 0
+; Victory Road 2F
+	db 48, PINSIR, HITMONLEE, MACHAMP, 0
+
+Green1Data:
+	db 5, SQUIRTLE, 0
+	db 5, BULBASAUR, 0
+	db 5, CHARMANDER, 0
+; Route 22
+	db $FF, 9, PIDGEY, 9, SQUIRTLE, 0
+	db $FF, 9, PIDGEY, 9, BULBASAUR, 0
+	db $FF, 9, PIDGEY, 9, CHARMANDER, 0
+; Cerulean City
+	db $FF, 18, PIDGEOTTO, 18, ABRA, 18, RATTATA, 17, SQUIRTLE, 0
+	db $FF, 18, PIDGEOTTO, 18, ABRA, 18, RATTATA, 17, BULBASAUR, 0
+	db $FF, 18, PIDGEOTTO, 18, ABRA, 18, RATTATA, 17, CHARMANDER, 0
+
+ProfOakData:
+; Postgame Fight
+	db $FF, 70, TAUROS, 70, EXEGGUTOR, 70, ARCANINE, 70, SNORLAX, 70, GYARADOS, 70, NIDOKING, 0
+	db $FF, 70, TAUROS, 70, EXEGGUTOR, 70, ARCANINE, 70, SNORLAX, 70, GYARADOS, 70, NIDOKING, 0
+	db $FF, 70, TAUROS, 70, EXEGGUTOR, 70, ARCANINE, 70, SNORLAX, 70, GYARADOS, 70, NIDOKING, 0
+
+ChiefData:
+; None
+
+ScientistData:
+; Unused
+	db 34, KOFFING, VOLTORB, 0
+; Silph Co. 2F
+	db 26, GRIMER, WEEZING, KOFFING, WEEZING, 0
+	db 28, MAGNEMITE, VOLTORB, MAGNETON, 0
+; Silph Co. 3F/Mansion 1F
+	db 34, ELECTRODE, WEEZING, 0
+; Silph Co. 4F
+	db 33, ELECTRODE, 0
+; Silph Co. 5F
+	db 32, MAGNETON, KOFFING, WEEZING, MAGNEMITE, 0
+; Silph Co. 6F
+	db 32, VOLTORB, KOFFING, MAGNETON, MAGNEMITE, KOFFING, 0
+; Silph Co. 7F
+	db 34, ELECTRODE, MUK, 0
+; Silph Co. 8F
+	db 34, GRIMER, ELECTRODE, 0
+; Silph Co. 9F
+	db 32, VOLTORB, KOFFING, MAGNETON, 0
+; Silph Co. 10F
+	db 32, MAGNEMITE, KOFFING, 0
+; Mansion 3F
+	db 43, ELECTRODE, MAGNETON, MUK, 0
+; Mansion B1F
+	db 44, ELECTABUZZ, ELECTRODE, 0
+
+GiovanniData:
+; Rocket Hideout B4F
+	db $FF, 37, ONIX, 35, RHYHORN, 38, KANGASKHAN, 36, PERSIAN, 0
+; Silph Co. 11F
+	db $FF, 42, KINGLER, 40, KANGASKHAN, 40, MACHAMP, 43, NIDOQUEEN, 0
+; Viridian Gym
+	db $FF, 49, GOLEM, 49, DUGTRIO, 49, NIDOQUEEN, 49, NIDOKING, 50, RHYDON, 0
+
+RocketData:
+; Mt. Moon B2F
+	db 13, MAGNEMITE, ZUBAT, 0
+	db 11, SANDSHREW, VOLTORB, ZUBAT, 0 
+	db 12, ZUBAT, EKANS, 0
+	db 16, RATICATE, 0
+; Cerulean City
+	db 17, MACHOP, DROWZEE, 0
+; Route 24
+	db 16, EKANS, ZUBAT, 0
+; Game Corner
+	db 31, RATICATE, MAGNEMITE, 0
+; Rocket Hideout B1F
+	db 31, DROWZEE, MACHOP, 0
+	db 32, RATICATE, MAGNEMITE, 0
+	db 31, GRIMER, KOFFING, CUBONE, 0
+	db 31, GRIMER, MACHOKE, RATICATE, GOLBAT, 0
+	db 32, VOLTORB, KOFFING, 0
+; Rocket Hideout B2F
+	db 32, VOLTORB, KOFFING, GRIMER, GOLBAT, RATICATE, 0
+; Rocket Hideout B3F
+	db 32, SANDSLASH, RATICATE, DROWZEE, 0
+	db 32, MACHOKE, PERSIAN, 0
+; Rocket Hideout B4F
+	db 32, SANDSLASH, ARBOK, GOLBAT, 0
+	db 33, MACHOKE, SANDSLASH, WEEZING, 0
+	db 32, KOFFING, RATICATE, 0
+; Pokémon Tower 7F
+	db 33, MACHOKE, PERSIAN, GOLBAT, 0
+	db 34, WEEZING, DROWZEE, 0
+	db 33, GOLBAT, MACHOKE, RATICATE, ELECTRODE, 0
+; Unused
+	db 26, DROWZEE, KOFFING, 0
+; Silph Co. 2F
+	db 33, CUBONE, VOLTORB, 0
+	db 34, GOLBAT, KOFFING, MAGNEMITE, RATICATE, VOLTORB, 0
+; Silph Co. 3F
+	db 34, RATICATE, DROWZEE, RATICATE, 0
+; Silph Co. 4F
+	db 34, MACHOKE, DROWZEE, 0
+	db 34, MAGNEMITE, MUK, CUBONE, 0
+; Silph Co. 5F
+	db 34, ARBOK, 0
+	db 34, PERSIAN, 0
+; Silph Co. 6F
+	db 33, ELECTRODE, MACHOKE, 0
+	db 34, RATICATE, DROWZEE, GOLBAT, 0
+; Silph Co. 7F
+	db 34, RATICATE, ARBOK, KOFFING, GOLBAT, 0
+	db 34, SANDSLASH, ELECTRODE, 0
+	db 33, ARBOK, SANDSLASH, 0
+; Silph Co. 8F
+	db 33, RATICATE, MAGNEMITE, GOLBAT, ARBOK, 0
+	db 34, WEEZING, GOLBAT, KOFFING, 0
+; Silph Co. 9F
+	db 34, DROWZEE, MUK, MACHOKE, 0
+	db 33, GOLBAT, GRIMER, CUBONE, 0
+; Silph Co. 10F
+	db 34, ELECTRODE, 0
+; Silph Co. 11F
+	db 33, WEEZING, HYPNO, MAGNEMITE, ARBOK, MUK, 0
+	db 34, MACHOKE, PERSIAN, ELECTRODE, 0
+
+CooltrainerMData:
+; Viridian Gym
+	db 47, NIDORINO, NIDOKING, 0
+; Victory Road 3F
+	db 48, EXEGGUTOR, CLOYSTER, ARCANINE, 0
+	db 48, KINGLER, TENTACRUEL, BLASTOISE, 0
+; Unused
+	db 45, KINGLER, STARMIE, 0
+; Victory Road 1F
+	db 47, IVYSAUR, WARTORTLE, CHARMELEON, CHARIZARD, 0
+; Unused
+	db 44, IVYSAUR, WARTORTLE, CHARMELEON, 0
+	db 49, NIDOKING, 0
+	db 44, KINGLER, CLOYSTER, 0
+; Viridian Gym
+	db 47, SANDSLASH, DUGTRIO, 0
+	db 48, RHYHORN, 0
+
+CooltrainerFData:
+; Celadon Gym
+	db 24, WEEPINBELL, GLOOM, IVYSAUR, 0
+; Victory Road 3F
+	db 47, RHYDON, TAUROS, VICTREEBEL, 0
+	db 48, PARASECT, DEWGONG, CHANSEY, 0
+; Unused
+	db 46, VILEPLUME, BUTTERFREE, 0
+; Victory Road 1F
+	db 47, PERSIAN, NINETALES, 0
+; Unused
+	db 45, IVYSAUR, VENUSAUR, 0
+	db 45, NIDORINA, NIDOQUEEN, 0
+	db 43, PERSIAN, NINETALES, RAICHU, 0
+
+BrunoData:
+	db $FF, 53, ONIX, 55, HITMONCHAN, 55, HITMONLEE, 56, POLIWRATH, 58, MACHAMP, 0
+
+BrockData:
+	db $FF, 12, GEODUDE, 12, ZUBAT, 15, ONIX, 0
+
+MistyData:
+	db $FF, 18, PSYDUCK, 18, STARYU, 22, STARMIE, 0
+
+LtSurgeData:
+	db $FF, 25, ELECTABUZZ, 25, MAGNETON, 28, RAICHU, 0
+
+ErikaData:
+	db $FF, 34, VICTREEBEL, 34, TANGELA, 37, VILEPLUME, 0
+
+KogaData:
+	db $FF, 43, GOLBAT, 43, MUK, 43, VENOMOTH, 44, WEEZING, 0
+
+BlaineData:
+	db $FF, 47, MAGMAR, 47, NINETALES, 47, RAPIDASH, 48, ARCANINE, 0
+
+SabrinaData:
+	db $FF, 45, SLOWBRO, 45, MR_MIME, 45, JYNX, 46, ALAKAZAM, 0
+
+GentlemanData:
+; SS Anne 1F Rooms
+	db 18, GROWLITHE, DROWZEE, 0
+	db 19, NIDORAN_M, NIDORAN_F, 0
+; SS Anne 2F Rooms/Vermilion Gym
+	db 23, PIKACHU, 0
+; Unused
+	db 48, PRIMEAPE, 0
+; SS Anne 2F Rooms
+	db 17, GROWLITHE, PONYTA, 0
+
+Green2Data:
+; SS Anne 2F
+	db $FF, 25, PIDGEOTTO, 22, RATICATE, 24, KADABRA, 26, WARTORTLE, 0 ;+ 6 level
+	db $FF, 25, PIDGEOTTO, 22, RATICATE, 24, KADABRA, 26, IVYSAUR, 0
+	db $FF, 25, PIDGEOTTO, 22, RATICATE, 24, KADABRA, 26, CHARMELEON, 0
+; Pokémon Tower 2F
+	db $FF, 31, PIDGEOTTO, 29, GROWLITHE, 28, EXEGGCUTE, 26, KADABRA, 31, WARTORTLE, 0
+	db $FF, 31, PIDGEOTTO, 29, GYARADOS, 28, GROWLITHE, 26, KADABRA, 31, IVYSAUR, 0
+	db $FF, 31, PIDGEOTTO, 29, EXEGGCUTE, 28, GYARADOS, 26, KADABRA, 31, CHARMELEON, 0
+; Silph Co. 7F
+	db $FF, 37, PIDGEOT, 38, GROWLITHE, 35, EXEGGUTOR, 35, ALAKAZAM, 40, BLASTOISE, 0
+	db $FF, 37, PIDGEOT, 38, GYARADOS, 35, GROWLITHE, 35, ALAKAZAM, 40, VENUSAUR, 0
+	db $FF, 37, PIDGEOT, 38, EXEGGUTOR, 35, GYARADOS, 35, ALAKAZAM, 40, CHARIZARD, 0
+; Route 22
+	db $FF, 47, PIDGEOT, 45, RHYHORN, 45, ARCANINE, 47, EXEGGUTOR, 50, ALAKAZAM, 53, BLASTOISE, 0
+	db $FF, 47, PIDGEOT, 45, RHYHORN, 45, GYARADOS, 47, ARCANINE, 50, ALAKAZAM, 53, VENUSAUR, 0
+	db $FF, 47, PIDGEOT, 45, RHYHORN, 45, EXEGGUTOR, 47, GYARADOS, 50, ALAKAZAM, 53, CHARIZARD, 0
+
+Green3Data:
+	db $FF, 61, PIDGEOT, 59, ALAKAZAM, 61, RHYDON, 61, ARCANINE, 63, EXEGGUTOR, 65, BLASTOISE, 0
+	db $FF, 61, PIDGEOT, 59, ALAKAZAM, 61, RHYDON, 61, GYARADOS, 63, ARCANINE, 65, VENUSAUR, 0
+	db $FF, 61, PIDGEOT, 59, ALAKAZAM, 61, RHYDON, 61, EXEGGUTOR, 63, GYARADOS, 65, CHARIZARD, 0
+
+LoreleiData:
+	db $FF, 54, DEWGONG, 53, CLOYSTER, 54, SLOWBRO, 56, JYNX, 56, LAPRAS, 0
+
+ChannelerData:
+; Unused
+	db 22, GASTLY, 0
+	db 24, GASTLY, 0
+	db 23, GASTLY, GASTLY, 0
+	db 24, GASTLY, 0
+; Pokémon Tower 3F
+	db 23, GASTLY, 0
+	db 24, GASTLY, 0
+; Unused
+	db 24, HAUNTER, 0
+; Pokémon Tower 3F
+	db 22, GASTLY, 0
+; Pokémon Tower 4F
+	db 24, GASTLY, 0
+	db 23, GASTLY, DROWZEE, 0
+; Unused
+	db 24, GASTLY, 0
+; Pokémon Tower 4F
+	db 22, GASTLY, 0
+; Unused
+	db 24, GASTLY, 0
+; Pokémon Tower 5F
+	db 23, HAUNTER, 0
+; Unused
+	db 24, GASTLY, 0
+; Pokémon Tower 5F
+	db 22, GASTLY, 0
+	db 24, GASTLY, 0
+	db 22, HAUNTER, 0
+; Pokémon Tower 6F
+	db 22, GASTLY, DROWZEE, GASTLY, 0
+	db 24, GASTLY, 0
+	db 24, GASTLY, 0
+; Saffron Gym
+	db 40, GASTLY, HAUNTER, 0
+	db 40, HAUNTER, 0
+	db 41, GASTLY, HYPNO, HAUNTER, 0
+
+AgathaData:
+	db $FF, 56, GENGAR, 56, GOLBAT, 55, HAUNTER, 58, ARBOK, 60, GENGAR, 0
+
+LanceData:
+	db $FF, 58, GYARADOS, 56, DRAGONAIR, 56, DRAGONAIR, 60, AERODACTYL, 62, DRAGONITE, 0
