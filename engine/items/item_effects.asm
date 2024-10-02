@@ -542,6 +542,10 @@ ItemUseBall:
 
 	ld hl, ItemUseBallText06
 	call PrintText
+ ; have to wait a couple of frames to ensure the next sound actually plays for pokemon with short names
+	call WaitForSoundToFinish
+	ld hl, ItemUseBallText06Sound
+	call TextCommandProcessor
 	call ClearSprites
 	ld a, [wEnemyMonSpecies]
 	ld [wd11e], a
@@ -640,8 +644,10 @@ ItemUseBallText08:
 
 ItemUseBallText06:
 ;"New DEX data will be added..."
-;play sound
 	text_far _ItemUseBallText06
+  text_end
+;play sound
+ItemUseBallText06Sound:
 	sound_dex_page_added
 	text_promptbutton
 	text_end
