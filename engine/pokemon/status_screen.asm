@@ -102,10 +102,6 @@ StatusScreen:
 	ld hl, vChars2 + $760
 	lb bc, BANK(BattleHudTiles3), $02
 	call CopyVideoDataDouble ; ─┘
-	ld de, PTile
-	ld hl, vChars2 + $720
-	lb bc, BANK(PTile), 1
-	call CopyVideoDataDouble ; P (for PP), inline
 	ld a, [hTileAnimations]
 	push af
 	xor a
@@ -288,8 +284,6 @@ DrawLineBox:
 	jr nz, .PrintHorizLine
 	ld [hl], $6f ; ← (halfarrow ending)
 	ret
-
-PTile: INCBIN "gfx/font/P.1bpp"
 
 PrintStatsBox:
 	ld a, d
