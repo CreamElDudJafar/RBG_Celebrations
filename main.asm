@@ -148,7 +148,7 @@ INCLUDE "engine/pokemon/bills_pc.asm"
 SECTION "Battle Engine 3", ROMX
 
 INCLUDE "engine/battle/print_type.asm"
-INCLUDE "engine/battle/save_trainer_name.asm"
+; INCLUDE "engine/battle/save_trainer_name.asm" ;; Removed from game for space ;
 INCLUDE "engine/battle/move_effects/focus_energy.asm"
 INCLUDE "text/tmhm_names.asm"
 tmhmNamesEnd:
