@@ -9,7 +9,7 @@ DefaultNamesGirlList:
     		db "NEW NAME@"
    	 	db "GREEN@"
    		db "LEAF@"
-    		db "AMANDA@"
+    		db "BRI@"
 
 DefaultNamesRivalList:
 	db "NEW NAME@"
@@ -29,7 +29,7 @@ DefaultNamesGirlList:
     		db "NEW NAME@"
    	 	db "GREEN@"
    		db "LEAF@"
-    		db "AMANDA@"
+    		db "BRI@"
 
 DefaultNamesRivalList:
 	db "NEW NAME@"

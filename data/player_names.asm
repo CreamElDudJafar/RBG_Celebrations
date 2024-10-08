@@ -10,7 +10,7 @@ DefaultNamesGirl:
   		db   "NEW NAME"
    		next "GREEN"
     		next "LEAF"
-    		next "AMANDA"
+    		next "BRI"
    		db   "@"
 
 DefaultNamesRival:
@@ -33,7 +33,7 @@ DefaultNamesGirl:
   		db   "NEW NAME"
    		next "GREEN"
     		next "LEAF"
-    		next "AMANDA"
+    		next "BRI"
    		db   "@"
 
 DefaultNamesRival:
