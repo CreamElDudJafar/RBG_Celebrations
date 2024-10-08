@@ -29,3 +29,6 @@ PewterMartSuperNerdText:
 .Text:
 	text_far _PewterMartSuperNerdText
 	text_end
+
+PewterMartClerkText::
+	script_mart POKE_BALL, POTION, ESCAPE_ROPE, REPEL, ANTIDOTE, PARLYZ_HEAL, AWAKENING
