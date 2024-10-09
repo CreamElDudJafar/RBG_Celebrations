@@ -10,12 +10,12 @@ ResetStatusAndHalveMoneyOnBlackout::
 	ld [wNPCMovementScriptPointerTableNum], a
 	ld [wFlags_0xcd60], a
 
-;ldh [hMoney], a CHANGED: removed pointless code that isn't needed since a carry is never produced.
-;ldh [hMoney], a
-; ldh [hMoney + 1], a
-; ldh [hMoney + 2], a
-; call HasEnoughMoney
-; jr c, .lostmoney ; never happens
+  ldh [hMoney], a
+  ldh [hMoney], a
+  ldh [hMoney + 1], a
+  ldh [hMoney + 2], a
+  call HasEnoughMoney
+  jr c, .lostmoney ; never happens
 
 	; Halve the player's money.
 	ld a, [wPlayerMoney]
