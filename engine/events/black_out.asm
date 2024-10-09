@@ -37,12 +37,8 @@ ResetStatusAndHalveMoneyOnBlackout::
 	ldh a, [hDivideBCDQuotient + 2]
 	ld [wPlayerMoney + 2], a
 
-	;;;;;;; PureRGBnote: ADDED: clear all safari zone flags on blackout. 
-	;;;;;;; Prevents strange behaviour / glitches when blacking out in the safari zone
-	;;;;;;; both by poison or by battle.
-	callfar ClearSafariFlags
 
-;.lostmoney
+.lostmoney
 	ld hl, wd732
 	set 2, [hl]
 	res 3, [hl]
