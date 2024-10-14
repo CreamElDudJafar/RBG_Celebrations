@@ -50,7 +50,7 @@ VBlank::
 	ldh [hFrameCounter], a
 
 .skipDec
-	call FadeOutAudio
+	farcall FadeOutAudio
 
 	ld a, [wAudioROMBank] ; music ROM bank
 	ldh [hLoadedROMBank], a

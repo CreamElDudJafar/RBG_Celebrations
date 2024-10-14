@@ -375,6 +375,9 @@ SECTION "Audio Engine 3", ROMX
 INCLUDE "audio/pokedex_rating_sfx.asm"
 INCLUDE "audio/engine_3.asm"
 
+SECTION "Fade Audio", ROMX
+
+INCLUDE "audio/fade_audio.asm"
 
 SECTION "Music 1", ROMX
 
