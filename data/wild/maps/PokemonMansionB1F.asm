@@ -1,6 +1,6 @@
 PokemonMansionB1FWildMons:
 	def_grass_wildmons 10 ; encounter rate
-IF DEF(_RED)
+IF (DEF(_RED) || DEF(_GREEN)) 
 	db 33, KOFFING
 	db 31, KOFFING
 	db 35, GROWLITHE

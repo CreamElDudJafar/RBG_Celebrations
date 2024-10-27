@@ -3,7 +3,7 @@ Route10WildMons:
 	db 16, VOLTORB
 	db 16, MAGNEMITE
 	db 14, KRABBY
-IF DEF(_RED)
+IF (DEF(_RED) || DEF(_GREEN)) 
 	db 11, EKANS
 	db 14, KRABBY
 	db 15, EKANS

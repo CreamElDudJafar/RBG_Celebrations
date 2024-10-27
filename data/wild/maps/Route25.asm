@@ -1,6 +1,6 @@
 Route25WildMons:
 	def_grass_wildmons 15 ; encounter rate
-IF DEF(_RED)
+IF (DEF(_RED) || DEF(_GREEN)) 
 	db  8, WEEDLE
 	db  9, KAKUNA
 	db 13, PIDGEY

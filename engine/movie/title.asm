@@ -126,6 +126,10 @@ ENDC
 IF DEF(_BLUE)
 	ld a, STARTER2 ; which Pokemon to show first on the title screen
 ENDC
+IF DEF(_GREEN)
+	ld a, STARTER3 ; which Pokemon to show first on the title screen
+ENDC
+
 	ld [wTitleMonSpecies], a
 	call LoadTitleMonSprite
 
@@ -405,6 +409,9 @@ IF DEF(_RED)
 ENDC
 IF DEF(_BLUE)
 	db $61,$62,$63,$64,$65,$66,$67,$68,"@" ; "Blue Version"
+ENDC
+IF DEF(_GREEN)
+	db $61,$62,$63,$64,$65,$66,$67,$68,"@" ; "Green Version"
 ENDC
 
 DebugNewGamePlayerName:

@@ -1,7 +1,7 @@
 Route7WildMons:
 	def_grass_wildmons 15 ; encounter rate
 	db 19, PIDGEY
-IF DEF(_RED)
+IF (DEF(_RED) || DEF(_GREEN)) 
 	db 19, ODDISH
 	db 17, EXEGGCUTE
 	db 25, EXEGGCUTE

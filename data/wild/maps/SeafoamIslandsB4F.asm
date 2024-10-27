@@ -1,6 +1,6 @@
 SeafoamIslandsB4FWildMons:
 	def_grass_wildmons 10 ; encounter rate
-IF DEF(_RED)
+IF (DEF(_RED) || DEF(_GREEN)) 
 	db 31, HORSEA
 	db 31, SHELLDER
 	db 32, KRABBY

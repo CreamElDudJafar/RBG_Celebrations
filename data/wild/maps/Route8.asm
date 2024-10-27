@@ -1,7 +1,7 @@
 Route8WildMons:
 	def_grass_wildmons 15 ; encounter rate
 	db 18, PIDGEY
-IF DEF(_RED)
+IF (DEF(_RED) || DEF(_GREEN)) 
 	db 18, MANKEY
 	db 17, EKANS
 	db 16, GROWLITHE

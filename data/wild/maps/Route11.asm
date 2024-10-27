@@ -1,6 +1,6 @@
 Route11WildMons:
 	def_grass_wildmons 15 ; encounter rate
-IF DEF(_RED)
+IF (DEF(_RED) || DEF(_GREEN)) 
 	db 14, EKANS
 	db 15, SPEAROW
 	db 12, EKANS

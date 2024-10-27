@@ -1,6 +1,6 @@
 Route24WildMons:
 	def_grass_wildmons 25 ; encounter rate
-IF DEF(_RED)
+IF (DEF(_RED) || DEF(_GREEN)) 
 	db  7, WEEDLE
 	db  8, KAKUNA
 	db 12, PIDGEY

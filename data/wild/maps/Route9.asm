@@ -3,7 +3,7 @@ Route9WildMons:
 	db 16, RATTATA
 	db 16, SPEAROW
 	db 14, VENONAT
-IF DEF(_RED)
+IF (DEF(_RED) || DEF(_GREEN)) 
 	db 11, EKANS
 	db 13, SPEAROW
 	db 15, EKANS

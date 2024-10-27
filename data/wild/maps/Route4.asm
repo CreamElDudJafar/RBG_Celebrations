@@ -3,7 +3,7 @@ Route4WildMons:
 	db 10, RATTATA
 	db 10, SPEAROW
 	db 12, MANKEY
-IF DEF(_RED)
+IF (DEF(_RED) || DEF(_GREEN)) 
 	db  6, EKANS
 	db  8, SPEAROW
 	db 10, SANDSHREW

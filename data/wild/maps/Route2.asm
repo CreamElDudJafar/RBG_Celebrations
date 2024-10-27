@@ -5,7 +5,7 @@ Route2WildMons:
 	db  4, PIDGEY
 	db  4, RATTATA
 	db  5, PIDGEY
-IF DEF(_RED)
+IF (DEF(_RED) || DEF(_GREEN)) 
 	db  3, WEEDLE
 	db  2, RATTATA
 	db  5, RATTATA
