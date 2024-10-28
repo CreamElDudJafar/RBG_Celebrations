@@ -17,6 +17,30 @@ _CeruleanGymMistyPreBattleText::
 	cont "#MON!"
 	done
 
+_CeruleanGymRematchPreBattle1Text::
+    text "Ready for a"
+    line "rematch at my"
+    cont "full strength?"
+
+    para "I won't hold"
+    line "back this time!"
+
+    para "Ready?"
+    done
+
+_CeruleanGymPreRematchBattle2Text::
+   text "Let the battle"
+   line "begin!"
+   done
+
+_CeruleanGymRematchPostBattleText::
+    text "You've won"
+    line "again!"
+
+    para "I'll train harder"
+    line "for next time!"
+    done
+
 _CeruleanGymMistyTM11ExplanationText::
 	text "TM11 teaches"
 	line "BUBBLEBEAM!"

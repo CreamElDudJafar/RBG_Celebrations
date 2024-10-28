@@ -19,3 +19,18 @@ _VermilionGymLTSurgePreBattleText::
 	para "The same as I'll"
 	line "do to you!"
 	done
+
+_VermilionGymRematchPreBattle1Text::
+	text "CHAMPION now?"
+	line "I've charged up!"
+
+	para "Are you ready?"
+	done
+
+_VermilionGymPreRematchBattle2Text::
+	text "No holding back!"
+	done
+
+_VermilionGymRematchPostBattleText::
+	text "Until next time!"
+	done
