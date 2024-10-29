@@ -41,6 +41,7 @@ Some FEATURES:
 - Sleep engine fixed (it works now like gen 2 - max 6 turns)
  - Removed 25% chance for enemy stat down moves to miss 
 - Swift will not hit throught Fly or Dig - Ghost now deals SUPER EFFECTIVE on Psychic Pokémon
+- Gym Leader rematches after E4
 
 CREDITS: IF ANYONE IS MISSED PLEASE LET ME KNOW. IT’S HARD TO KEEP TRACK OF ALL CREDITS SINCE THIS HACK WAS STARTED BY ONE PERSON AND THEN FINISHED/TAKEN OVER BY ANOTHER…. BUT WE WILL GLADLY ADD YOU IN 😊.
 
