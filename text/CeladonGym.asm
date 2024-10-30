@@ -47,6 +47,35 @@ _CeladonGymErikaPostBattleAdviceText::
 	cont "unattractive."
 	done
 
+_CeladonGymRematchPreBattle1Text::
+	text "Your pokemon have"
+	line "grown so much and"
+	cont "are stronger."
+	
+	para "It's incredible!"
+
+	para "How about a"
+	line "rematch?"
+	done
+
+_CeladonGymPreRematchBattle2Text::
+	text "Prepare yourself!"
+
+	para "My #MON are"
+	line "also fully"
+	cont "evolved now!"
+	done
+
+_CeladonGymRematchPostBattleText::
+	text "Unbelievable!"
+
+	para "Your strength"
+	line "continues to"
+	cont "grow."
+
+	para "Well done!"
+	done
+
 _CeladonGymRainbowBadgeInfoText::
 	text "The RAINBOWBADGE"
 	line "will make #MON"

@@ -45,6 +45,11 @@ _TooImportantToTossText::
 	line "tant to toss!"
 	prompt
 
+_TooImportantToDepositText::
+	text "That's too impor-"
+	line "tant to deposit!"
+	prompt
+
 _AlreadyKnowsText::
 	text_ram wcd6d
 	text " knows"
@@ -143,7 +148,7 @@ _AfterTrade2Text::
 	text " you"
 	line "traded to me"
 
-	para "went and evolved!"
+	para "has grown strong!"
 	done
 
 _WannaTrade3Text::
@@ -198,3 +203,21 @@ _UsedCutText::
 	text " hacked"
 	line "away with CUT!"
 	prompt
+
+_WannaTrade4Text::
+	text "I'm the TRADER! I"
+	line "can trade your"
+	para "own #MON back"
+	line "to you."
+	para "Wanna trade?"
+	done
+	
+_NoTrade4Text::
+	text "Ok, maybe next"
+	line "time then."
+	done
+	
+_Thanks4Text::
+	text "All done, I hope"
+	line "that helped."
+	done

@@ -3,7 +3,13 @@ DefaultNamesPlayerList:
 	db "NEW NAME@"
 	db "RED@"
 	db "ASH@"
-	db "JACK@"
+	db "JIM@"
+	
+DefaultNamesGirlList:
+    	db "NEW NAME@"
+   	 db "GREEN@"
+   	db "LEAF@"
+    	db "BRI@"
 
 DefaultNamesRivalList:
 	db "NEW NAME@"
@@ -17,11 +23,37 @@ DefaultNamesPlayerList:
 	db "NEW NAME@"
 	db "BLUE@"
 	db "GARY@"
-	db "JOHN@"
+	db "JIM@"
+	
+DefaultNamesGirlList:
+    	db "NEW NAME@"
+   	db "GREEN@"
+   	db "LEAF@"
+    	db "BRI@"
 
 DefaultNamesRivalList:
 	db "NEW NAME@"
 	db "RED@"
 	db "ASH@"
 	db "JACK@"
+ENDC
+
+IF DEF(_GREEN)
+DefaultNamesPlayerList:
+	db "NEW NAME@"
+	db "GREEN@"
+	db "GARY@"
+	db "JIM@"
+	
+DefaultNamesGirlList:
+    	db "NEW NAME@"
+   	db "GREEN@"
+   	db "LEAF@"
+    	db "BRI@"
+
+DefaultNamesRivalList:
+	db "NEW NAME@"
+	db "RED@"
+	db "ASH@"
+	db "JOHNK@"
 ENDC

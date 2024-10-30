@@ -92,7 +92,6 @@ DisplayNamingScreen:
 	call RunPaletteCommand
 	call LoadHpBarAndStatusTilePatterns
 	call LoadEDTile
-	farcall LoadMonPartySpriteGfx
 	hlcoord 0, 4
 	ld b, 9
 	ld c, 18
@@ -117,7 +116,9 @@ DisplayNamingScreen:
 	ld [wAnimCounter], a
 .selectReturnPoint
 	call PrintAlphabet
-	call GBPalNormal
+	ld a, %11100100 ; 3210
+	ldh [rBGP], a
+	ldh [rOBP0], a
 .ABStartReturnPoint
 	ld a, [wNamingScreenSubmitName]
 	and a
@@ -230,13 +231,6 @@ DisplayNamingScreen:
 	ld a, [hl]
 	ld [wNamingScreenLetter], a
 	call CalcStringLength
-	ld a, [wNamingScreenLetter]
-	cp "ﾞ"
-	ld de, Dakutens
-	jr z, .dakutensAndHandakutens
-	cp "ﾟ"
-	ld de, Handakutens
-	jr z, .dakutensAndHandakutens
 	ld a, [wNamingScreenType]
 	cp NAME_MON_SCREEN
 	jr nc, .checkMonNameLength
@@ -250,12 +244,6 @@ DisplayNamingScreen:
 	jr c, .addLetter
 	ret
 
-.dakutensAndHandakutens
-	push hl
-	call DakutensAndHandakutens
-	pop hl
-	ret nc
-	dec hl
 .addLetter
 	ld a, [wNamingScreenLetter]
 	ld [hli], a
@@ -420,22 +408,6 @@ PrintNicknameAndUnderscores:
 	ld [hl], $77 ; raised underscore tile id
 	ret
 
-DakutensAndHandakutens:
-	push de
-	call CalcStringLength
-	dec hl
-	ld a, [hl]
-	pop hl
-	ld de, $2
-	call IsInArray
-	ret nc
-	inc hl
-	ld a, [hl]
-	ld [wNamingScreenLetter], a
-	ret
-
-INCLUDE "data/text/dakutens.asm"
-
 ; calculates the length of the string at wStringBuffer and stores it in c
 CalcStringLength:
 	ld hl, wStringBuffer
@@ -460,7 +432,7 @@ PrintNamingText:
 	ld a, [wcf91]
 	ld [wMonPartySpriteSpecies], a
 	push af
-	farcall WriteMonPartySpriteOAMBySpecies
+	farcall LoadSinglePartyMonSprite
 	pop af
 	ld [wd11e], a
 	call GetMonName

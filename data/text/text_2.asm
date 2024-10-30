@@ -1079,12 +1079,7 @@ _MonName1Text::
 	text "<USER>@"
 	text_end
 
-_Used1Text::
-	text_start
-	line "used @"
-	text_end
-
-_Used2Text::
+_UsedText::
 	text_start
 	line "used @"
 	text_end
@@ -1098,23 +1093,7 @@ _MoveNameText::
 	text_ram wStringBuffer
 	text "@"
 
-_ExclamationPoint1Text::
-	text "!"
-	done
-
-_ExclamationPoint2Text::
-	text "!"
-	done
-
-_ExclamationPoint3Text::
-	text "!"
-	done
-
-_ExclamationPoint4Text::
-	text "!"
-	done
-
-_ExclamationPoint5Text::
+_ExclamationPointText::
 	text "!"
 	done
 
@@ -1127,11 +1106,6 @@ _KeptGoingAndCrashedText::
 	text "<USER>"
 	line "kept going and"
 	cont "crashed!"
-	prompt
-
-_UnaffectedText::
-	text "<TARGET>'s"
-	line "unaffected!"
 	prompt
 
 _DoesntAffectMonText::
@@ -1703,6 +1677,16 @@ _OakSpeechText1::
 	cont "the #MON PROF!"
 	prompt
 
+_NormalModeText::
+	text "Classic #MON."
+	done
+
+_HardModeText::
+	text "Set mode, No items"
+	line "in battle and Gym"
+	cont "level caps apply."
+	done
+
 _OakSpeechText2A::
 	text "This world is"
 	line "inhabited by"
@@ -1785,6 +1769,24 @@ _TextIDErrorText::
 	text " ERROR."
 	done
 
+_CantUsePCHere:: ; new, for portablePC
+	text "You cannot use"
+	line "this here!"
+	prompt
+
 _ContCharText::
 	text "<_CONT>@"
 	text_end
+
+_DifficultyText::
+    text "Select Difficulty"
+    done
+
+_AreYouSureText::
+	text "Are you sure?"
+	done
+
+_BoyGirlText::
+    text "Play as a boy, or"
+    line "as a girl?"
+    done

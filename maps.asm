@@ -716,6 +716,7 @@ INCLUDE "scripts/Route21.asm"
 
 INCLUDE "data/maps/headers/VermilionOldRodHouse.asm"
 INCLUDE "scripts/VermilionOldRodHouse.asm"
+INCLUDE "scripts/move_deleter.asm"
 INCLUDE "data/maps/objects/VermilionOldRodHouse.asm"
 
 INCLUDE "data/maps/headers/CeladonMart2F.asm"
@@ -1137,6 +1138,7 @@ SECTION "Maps 21", ROMX
 
 INCLUDE "data/maps/headers/FuchsiaBillsGrandpasHouse.asm"
 INCLUDE "scripts/FuchsiaBillsGrandpasHouse.asm"
+INCLUDE "scripts/move_relearner.asm"
 INCLUDE "data/maps/objects/FuchsiaBillsGrandpasHouse.asm"
 
 INCLUDE "data/maps/headers/FuchsiaPokecenter.asm"

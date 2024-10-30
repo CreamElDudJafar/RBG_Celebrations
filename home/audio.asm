@@ -92,7 +92,7 @@ UpdateMusic6Times::
 .loop
 	push bc
 	push hl
-	call Bankswitch
+	rst _Bankswitch
 	pop hl
 	pop bc
 	dec c

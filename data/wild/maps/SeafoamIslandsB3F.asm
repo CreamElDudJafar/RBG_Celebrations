@@ -1,6 +1,6 @@
 SeafoamIslandsB3FWildMons:
 	def_grass_wildmons 10 ; encounter rate
-IF DEF(_RED)
+IF (DEF(_RED) || DEF(_GREEN)) 
 	db 31, SLOWPOKE
 	db 31, SEEL
 	db 33, SLOWPOKE

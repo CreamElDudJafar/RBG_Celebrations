@@ -27,84 +27,102 @@ GetMonName::
 GetItemName::
 ; given an item ID at [wd11e], store the name of the item into a string
 ;     starting at wcd6d
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;joenote - rewriting this function for list of tm & hm names
 	push hl
 	push bc
-	ld a, [wd11e]
-	cp HM01 ; is this a TM/HM?
-	jr nc, .Machine
-
-	ld [wd0b5], a
 	ld a, ITEM_NAME
 	ld [wNameListType], a
+	ld a, [wd11e]
+	ld [wd0b5], a
+	cp HM01 ; is this a TM/HM?
+	jr nc, .Machine
 	ld a, BANK(ItemNames)
+	jr .Finish
+.Machine
+	ld a, BANK(tmhmNames)
+.Finish
 	ld [wPredefBank], a
 	call GetName
-	jr .Finish
-
-.Machine
-	call GetMachineName
-.Finish
 	ld de, wcd6d ; pointer to where item name is stored in RAM
 	pop bc
 	pop hl
 	ret
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;	push hl
+;	push bc
+;	ld a, [wd11e]
+;	cp HM01 ; is this a TM/HM?
+;	jr nc, .Machine
+;	ld [wd0b5], a
+;	ld a, ITEM_NAME
+;	ld [wNameListType], a
+;	ld a, BANK(ItemNames)
+;	ld [wPredefBank], a
+;	call GetName
+;	jr .Finish
+;.Machine
+;;	call GetMachineName
+;.Finish
+;	ld de, wcd6d ; pointer to where item name is stored in RAM
+;	pop bc
+;	pop hl
+;	ret
 
-GetMachineName::
-; copies the name of the TM/HM in [wd11e] to wcd6d
-	push hl
-	push de
-	push bc
-	ld a, [wd11e]
-	push af
-	cp TM01 ; is this a TM? [not HM]
-	jr nc, .WriteTM
-; if HM, then write "HM" and add NUM_HMS to the item ID, so we can reuse the
-; TM printing code
-	add NUM_HMS
-	ld [wd11e], a
-	ld hl, HiddenPrefix ; points to "HM"
-	ld bc, 2
-	jr .WriteMachinePrefix
-.WriteTM
-	ld hl, TechnicalPrefix ; points to "TM"
-	ld bc, 2
-.WriteMachinePrefix
-	ld de, wcd6d
-	call CopyData
-
-; now get the machine number and convert it to text
-	ld a, [wd11e]
-	sub TM01 - 1
-	ld b, "0"
-.FirstDigit
-	sub 10
-	jr c, .SecondDigit
-	inc b
-	jr .FirstDigit
-.SecondDigit
-	add 10
-	push af
-	ld a, b
-	ld [de], a
-	inc de
-	pop af
-	ld b, "0"
-	add b
-	ld [de], a
-	inc de
-	ld a, "@"
-	ld [de], a
-	pop af
-	ld [wd11e], a
-	pop bc
-	pop de
-	pop hl
-	ret
-
-TechnicalPrefix::
-	db "TM"
-HiddenPrefix::
-	db "HM"
+;GetMachineName::	;joenote - not needed since using list for tm and hm names
+;; copies the name of the TM/HM in [wd11e] to wcd6d
+;	push hl
+;	push de
+;	push bc
+;	ld a, [wd11e]
+;	push af
+;	cp TM01 ; is this a TM? [not HM]
+;	jr nc, .WriteTM
+;; if HM, then write "HM" and add 5 to the item ID, so we can reuse the
+;; TM printing code
+;	add 5
+;	ld [wd11e], a
+;	ld hl, HiddenPrefix ; points to "HM"
+;	ld bc, 2
+;	jr .WriteMachinePrefix
+;.WriteTM
+;	ld hl, TechnicalPrefix ; points to "TM"
+;	ld bc, 2
+;.WriteMachinePrefix
+;	ld de, wcd6d
+;	call CopyData
+;; now get the machine number and convert it to text
+;	ld a, [wd11e]
+;	sub TM01 - 1
+;	ld b, "0"
+;.FirstDigit
+;	sub 10
+;	jr c, .SecondDigit
+;	inc b
+;	jr .FirstDigit
+;.SecondDigit
+;	add 10
+;	push af
+;	ld a, b
+;	ld [de], a
+;	inc de
+;	pop af
+;	ld b, "0"
+;	add b
+;	ld [de], a
+;	inc de
+;	ld a, "@"
+;	ld [de], a
+;	pop af
+;	ld [wd11e], a
+;	pop bc
+;	pop de
+;	pop hl
+;	ret
+;TechnicalPrefix::
+;	db "TM"
+;HiddenPrefix::
+;	db "HM"
 
 ; sets carry if item is HM, clears carry if item is not HM
 ; Input: a = item ID
@@ -125,7 +143,8 @@ IsMoveHM::
 	jp IsInArray
 
 HMMoves::
-INCLUDE "data/moves/hm_moves.asm"
+	db CUT,FLY,SURF,STRENGTH,FLASH
+	db $ff ; terminator
 
 GetMoveName::
 	push hl

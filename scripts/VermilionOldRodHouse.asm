@@ -3,7 +3,9 @@ VermilionOldRodHouse_Script:
 
 VermilionOldRodHouse_TextPointers:
 	def_text_pointers
+	dw_const MoveDeleterText1,						TEXT_VERMILIONOLDRODHOUSE_DELETER
 	dw_const VermilionOldRodHouseFishingGuruText, TEXT_VERMILIONOLDRODHOUSE_FISHING_GURU
+	
 
 VermilionOldRodHouseFishingGuruText:
 	text_asm

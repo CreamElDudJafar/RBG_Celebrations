@@ -149,7 +149,7 @@ ENDC
 	xor a ; EXCLAMATION_BUBBLE
 	ld [wWhichEmotionBubble], a
 	predef EmotionBubble
-	ld a, D_RIGHT | D_LEFT | D_UP | D_DOWN
+	ld a, $ff
 	ld [wJoyIgnore], a
 	xor a
 	ldh [hJoyHeld], a
@@ -163,6 +163,8 @@ DisplayEnemyTrainerTextAndStartBattle::
 	ld a, [wd730]
 	and $1
 	ret nz ; return if the enemy trainer hasn't finished walking to the player's sprite
+	farcall FaceEnemyTrainer
+	xor a
 	ld [wJoyIgnore], a
 	ld a, [wSpriteIndex]
 	ldh [hSpriteIndexOrTextID], a
@@ -351,7 +353,7 @@ PrintEndBattleText::
 	ldh [hLoadedROMBank], a
 	ld [MBC1RomBank], a
 	push hl
-	farcall SaveTrainerName
+	call SaveTrainerName
 	ld hl, TrainerEndBattleText
 	call PrintText
 	pop hl
@@ -360,6 +362,18 @@ PrintEndBattleText::
 	ld [MBC1RomBank], a
 	farcall FreezeEnemyTrainerSprite
 	jp WaitForSoundToFinish
+
+SaveTrainerName::
+	ld hl, wTrainerName
+	ld de, wcd6d
+.CopyCharacter
+	ld a, [hli]
+	ld [de], a
+	inc de
+	cp "@"
+	jr nz, .CopyCharacter
+	ret
+
 
 GetSavedEndBattleTextPointer::
 	ld a, [wBattleResult]

@@ -37,6 +37,29 @@ _SaffronGymSabrinaPostBattleAdviceText::
 	cont "realize it!"
 	done
 
+_SaffronGymRematchPreBattle1Text::
+    text "My psychic powers"
+    line "as well as my"
+    cont "#MON are now"
+    cont "more powerful!"
+
+    para "Ready for a"
+    line "real challenge?"
+    done
+
+_SaffronGymPreRematchBattle2Text::
+    text "Let's see the"
+    line "CHAMPION's power!"
+    done
+
+_SaffronGymRematchPostBattleText::
+    text "Amazing! Your"
+    line "psychic powers"
+    cont "exceed mine!"
+
+    para "Congratulations!"
+    done
+
 _SaffronGymSabrinaMarshBadgeInfoText::
 	text "The MARSHBADGE"
 	line "makes #MON up"

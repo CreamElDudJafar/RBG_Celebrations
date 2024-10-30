@@ -180,6 +180,69 @@ wOverworldMapEnd::
 
 NEXTU
 wTempPic:: ds 7 * 7 tiles
+
+NEXTU
+wPrinterData::
+wPrinterSendState:: db
+wPrinterRowIndex:: db
+
+; Printer data header
+wPrinterDataHeader::
+wc6ea:: db
+wc6eb:: db
+wc6ec:: db
+wc6ed:: db
+wPrinterChecksum:: dw
+
+UNION
+wPrinterSerialReceived:: db
+; bit 7: set if error 1 (battery low)
+; bit 6: set if error 4 (too hot or cold)
+; bit 5: set if error 3 (paper jammed or empty)
+; if this and the previous byte are both $ff: error 2 (connection error)
+wPrinterStatusReceived:: db
+
+wc6f2:: db
+wc6f3:: db
+	ds 11
+wTempLevelStore:: db
+wLYOverrides:: ds $100
+wLYOverridesEnd::
+wLYOverridesBuffer:: ds $100
+wLYOverridesBufferEnd::
+
+NEXTU
+wPrinterSendDataSource1:: ds 20 tiles
+wPrinterSendDataSource2:: ds 20 tiles
+ENDU
+
+wPrinterSendDataSource1End::
+
+wPrinterHandshake:: db
+wPrinterStatusFlags:: db
+wHandshakeFrameDelay:: db
+wPrinterSerialFrameDelay:: db
+wPrinterSendByteOffset:: dw
+wPrinterDataSize:: dw
+wPrinterTileBuffer:: ds SCREEN_HEIGHT * SCREEN_WIDTH
+wPrinterStatusIndicator:: dw
+wcae2:: db
+wPrinterSettingsTempCopy:: db
+	ds 16
+wPrinterQueueLength:: db
+wPrinterDataEnd::
+
+wPrinterPokedexEntryTextPointer:: dw
+	ds 2
+wPrinterPokedexMonIsOwned:: db
+	ds 226
+UNION
+wcbdc:: ds 1 tiles
+NEXTU
+	ds 14
+wcbea:: dw
+ENDU
+wcbec:: ds 1 tiles
 ENDU
 
 
@@ -236,7 +299,10 @@ wPlayerMonNumber:: db
 ; the address of the menu cursor's current location within wTileMap
 wMenuCursorLocation:: dw
 
-	ds 2
+; index in party of currently battling mon
+wMaxDaycareLevel:: db
+
+	ds 1
 
 ; how many times should HandleMenuInput poll the joypad state before it returns?
 wMenuJoypadPollCount:: db
@@ -377,13 +443,20 @@ wSlotMachineSevenAndBarModeChance:: db
 	ds 2
 ; ROM back to return to when the player is done with the slot machine
 wSlotMachineSavedROMBank:: db
-	ds 166
+; Move Buffer stuff for Mateo's code
+wMoveBuffer::
+wRelearnableMoves::
+	ds 164
+; Try not to use this stack. 
+; A good amount of space is needed to store data for the move relearner.
+; If it's like, 2, it'll lag like crazy and show garbage from elsewhere.	
 wLuckySlotHiddenObjectIndex:: db
 
 NEXTU
 ; values between 0-6. Shake screen horizontally, shake screen vertically, blink Pokemon...
 wAnimationType:: db
-	ds 29
+wMoveListCounter:: db
+	ds 28
 wAnimPalette:: db
 
 NEXTU
@@ -780,7 +853,9 @@ wBadgeNameTile:: db
 ; badge is owned) to be drawn on the trainer screen
 ; the byte after the list gets read when shifting back one byte
 wBadgeOrFaceTiles:: ds NUM_BADGES + 1
-	ds 1
+
+wTempFlag:: db
+
 ; temporary list created when displaying the badges on the trainer screen
 ; one byte for each badge; 0 = not obtained, 1 = obtained
 wTempObtainedBadgesBooleans:: ds NUM_BADGES
@@ -1175,11 +1250,11 @@ wBattleMon:: battle_struct wBattleMon
 
 wTrainerClass:: db
 
-	ds 1
-
 wTrainerPicPointer:: dw
 
-	ds 1
+; used by pureRGB AI
+wEnemyLastSelectedMoveDisable:: db
+wPlayerLastSelectedMove:: db
 
 UNION
 wTempMoveNameBuffer:: ds 14
@@ -1189,14 +1264,16 @@ NEXTU
 wLearnMoveMonName:: ds NAME_LENGTH
 ENDU
 
-	ds 2
+; For the pureRGB AI enhancements
+wAIMoveSpamAvoider:: db
+wAITargetMonStatus:: db
+wAITargetMonType1:: db
+wAITargetMonType2:: db
 
 ; money received after battle = base money × level of last enemy mon
 wTrainerBaseMoney:: dw ; BCD
 
 wMissableObjectCounter:: db
-
-	ds 1
 
 ; 13 bytes for the letters of the opposing trainer
 ; the name is terminated with $50 with possible
@@ -1532,7 +1609,7 @@ wMonHBackSprite:: dw
 wMonHMoves:: ds NUM_MOVES
 wMonHGrowthRate:: db
 wMonHLearnset:: flag_array NUM_TMS + NUM_HMS
-	ds 1
+wMonHPicBank:: db
 wMonHeaderEnd::
 
 ; saved at the start of a battle and then written back at the end of the battle
@@ -1738,9 +1815,7 @@ wPokedexOwnedEnd::
 wPokedexSeen:: flag_array NUM_POKEMON
 wPokedexSeenEnd::
 
-wNumBagItems:: db
-; item, quantity
-wBagItems:: ds BAG_ITEM_CAPACITY * 2 + 1
+ds 42
 
 wPlayerMoney:: ds 3 ; BCD
 
@@ -1830,7 +1905,24 @@ wWarpEntries:: ds 32 * 4 ; Y, X, warp ID, map ID
 ; if $ff, the player's coordinates are not updated when entering the map
 wDestinationWarpID:: db
 
-	ds 128
+;;;;;;;;;; note: CHANGED: this empty space is now used for bigger bag space
+UNION
+; original size of this empty space
+ds 128
+
+NEXTU
+wNumBagItems:: db
+; item, quantity
+wBagItems:: ds BAG_ITEM_CAPACITY * 2 + 1 ; now holds 50 items
+;;;;
+
+wUniQuizAnswer:: db
+ds 2
+
+; 25 bytes left to use
+
+ENDU
+;;;;;;;;;;
 
 ; number of signs in the current map (up to 16)
 wNumSigns:: db
@@ -1929,7 +2021,8 @@ wPalletTownCurScript:: db
 	ds 1
 wBluesHouseCurScript:: db
 wViridianCityCurScript:: db
-	ds 2
+wRoute1CurScript:: db
+	ds 1
 wPewterCityCurScript:: db
 wRoute3CurScript:: db
 wRoute4CurScript:: db
@@ -2040,7 +2133,18 @@ wRoute18Gate1FCurScript:: db
 	ds 78
 wGameProgressFlagsEnd::
 
-	ds 56
+	wDifficulty::
+		; $00 = normal
+		; $01 = hard
+			ds 1
+
+	wPlayerGender::
+		; $00 = male
+		; $01 = female
+			ds 1
+	
+		; unused
+			ds 54
 
 wObtainedHiddenItemsFlags:: flag_array 112
 
@@ -2200,7 +2304,11 @@ wCardKeyDoorX:: db
 wFirstLockTrashCanIndex:: db
 wSecondLockTrashCanIndex:: db
 
-	ds 2
+	ds 1
+
+wGameStage:: db
+	; $00 = before champion fight
+	; $01 = post game
 
 wEventFlags:: flag_array NUM_EVENTS
 
@@ -2250,7 +2358,12 @@ ENDU
 
 wTrainerHeaderPtr:: dw
 
-	ds 6
+; Used on the new status screen
+wDVCalcVar1:: 
+	ds 2
+
+wDVCalcVar2::
+	ds 5
 
 ; the trainer the player must face after getting a wrong answer in the Cinnabar
 ; gym quiz
@@ -2261,7 +2374,7 @@ wUnusedDA38:: db
 ; mostly copied from map-specific map script pointer and written back later
 wCurMapScript:: db
 
-	ds 7
+	ds 6
 
 wPlayTimeHours:: db
 wPlayTimeMaxed:: db
@@ -2313,6 +2426,12 @@ ENDR
 wBoxMonNicksEnd::
 
 wBoxDataEnd::
+
+wEXPBarPixelLength::  ds 1
+wEXPBarBaseEXP::      ds 3
+wEXPBarCurEXP::       ds 3
+wEXPBarNeededEXP::    ds 3
+wEXPBarKeepFullFlag:: ds 1
 
 
 SECTION "Stack", WRAM0

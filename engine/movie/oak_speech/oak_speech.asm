@@ -64,6 +64,41 @@ OakSpeech:
 	ld a, [wd732]
 	bit BIT_DEBUG_MODE, a
 	jp nz, .skipSpeech
+.MenuCursorLoop ; difficulty menu
+	ld hl, DifficultyText
+  	call PrintText
+  	call DifficultyChoice
+	ld a, [wCurrentMenuItem]
+	ld [wDifficulty], a
+	cp 0 ; normal
+	jr z, .SelectedNormalMode
+	cp 1 ; hard
+	jr z, .SelectedHardMode
+	; space for more game modes down the line
+.SelectedNormalMode
+	ld hl, NormalModeText
+	call PrintText
+	jp .YesNoNormalHard
+.SelectedHardMode
+	ld hl, HardModeText
+	call PrintText
+.YesNoNormalHard ; Give the player a brief description of each game mode and make sure that's what they want
+  	call YesNoNormalHardChoice
+	ld a, [wCurrentMenuItem]
+	cp 0
+	jr z, .doneLoop
+	jp .MenuCursorLoop ; If player says no, back to difficulty selection
+.doneLoop
+   	call ClearScreen ; clear the screen before resuming normal intro
+
+	; Gender Menu
+	ld hl, BoyGirlText  ; added to the same file as the other oak text
+  	call PrintText     ; show this text
+  	call BoyGirlChoice ; added routine at the end of this file
+   	ld a, [wCurrentMenuItem]
+   	ld [wPlayerGender], a ; store player's gender. 00 for boy, 01 for girl
+   	call ClearScreen ; clear the screen before resuming normal intro
+
 	ld de, ProfOakPic
 	lb bc, BANK(ProfOakPic), $00
 	call IntroDisplayPicCenteredOrUpperRight
@@ -85,7 +120,13 @@ OakSpeech:
 	call ClearScreen
 	ld de, RedPicFront
 	lb bc, BANK(RedPicFront), $00
-	call IntroDisplayPicCenteredOrUpperRight
+	ld a, [wPlayerGender] 	; check gender
+		and a      				; check gender
+		jr z, .NotGreen1
+		ld de, GreenPicFront
+		lb bc, BANK(GreenPicFront), $00
+	.NotGreen1:
+		call IntroDisplayPicCenteredOrUpperRight
 	call MovePicLeft
 	ld hl, IntroducePlayerText
 	call PrintText
@@ -104,7 +145,13 @@ OakSpeech:
 	call ClearScreen
 	ld de, RedPicFront
 	lb bc, BANK(RedPicFront), $00
-	call IntroDisplayPicCenteredOrUpperRight
+	ld a, [wPlayerGender] ; check gender
+   	  	and a      ; check gender
+ 	  	jr z, .NotGreen2
+    	  	ld de, GreenPicFront
+          	lb bc, Bank(GreenPicFront), $00
+	.NotGreen2:
+    		call IntroDisplayPicCenteredOrUpperRight
 	call GBFadeInFromWhite
 	ld a, [wd72d]
 	and a
@@ -124,10 +171,17 @@ OakSpeech:
 	ld de, RedSprite
 	ld hl, vSprites
 	lb bc, BANK(RedSprite), $0C
-	call CopyVideoData
-	ld de, ShrinkPic1
-	lb bc, BANK(ShrinkPic1), $00
-	call IntroDisplayPicCenteredOrUpperRight
+	ld a, [wPlayerGender] ; check gender
+    		and a      ; check gender
+    		jr z, .NotGreen3
+    		ld de,GreenSprite
+    		lb bc, BANK(GreenSprite), $0C
+	.NotGreen3:
+   	 	ld hl, vSprites
+   		call CopyVideoData
+    		ld de,ShrinkPic1
+   		lb bc, BANK(ShrinkPic1), $00
+   		call IntroDisplayPicCenteredOrUpperRight
 	ld c, 4
 	call DelayFrames
 	ld de, ShrinkPic2
@@ -166,7 +220,7 @@ OakSpeechText1:
 OakSpeechText2:
 	text_far _OakSpeechText2A
 	; BUG: The cry played does not match the sprite displayed.
-	sound_cry_nidorina
+	sound_cry_nidorino
 	text_far _OakSpeechText2B
 	text_end
 IntroducePlayerText:
@@ -178,6 +232,21 @@ IntroduceRivalText:
 OakSpeechText3:
 	text_far _OakSpeechText3
 	text_end
+NormalModeText:
+	text_far _NormalModeText
+	text_end
+HardModeText:
+	text_far _HardModeText
+	text_end
+DifficultyText:
+	text_far _DifficultyText
+	text_end
+YesNoNormalHardText:
+	text_far _AreYouSureText
+	text_end
+BoyGirlText:
+    text_far _BoyGirlText
+    text_end
 
 FadeInIntroPic:
 	ld hl, IntroFadePalettes
@@ -240,3 +309,61 @@ IntroDisplayPicCenteredOrUpperRight:
 	xor a
 	ldh [hStartTileID], a
 	predef_jump CopyUncompressedPicToTilemap
+	
+
+; displays difficulty choice
+DifficultyChoice::
+	call SaveScreenTilesToBuffer1
+	call InitDifficultyTextBoxParameters
+	jr DisplayDifficultyChoice
+
+InitDifficultyTextBoxParameters::
+  	ld a, $8 ; loads the value for the difficulty menu
+	ld [wTwoOptionMenuID], a
+	coord hl, 5, 5
+	ld bc, $606 ; Cursor Pos
+	ret
+	
+DisplayDifficultyChoice::
+	ld a, $14
+	ld [wTextBoxID], a
+	call DisplayTextBoxID
+	jp LoadScreenTilesFromBuffer1
+
+; display yes/no choice
+YesNoNormalHardChoice::
+	call SaveScreenTilesToBuffer1
+	call InitYesNoNormalHardTextBoxParameters
+	jr DisplayYesNoNormalHardChoice
+
+InitYesNoNormalHardTextBoxParameters::
+  	ld a, $0 ; loads the value for the difficulty menu
+	ld [wTwoOptionMenuID], a
+	coord hl, 7, 5
+	ld bc, $608 ; Cursor Pos
+	ret
+	
+DisplayYesNoNormalHardChoice::
+	ld a, $14
+	ld [wTextBoxID], a
+	call DisplayTextBoxID
+	jp LoadScreenTilesFromBuffer1
+
+; displays boy/girl choice
+BoyGirlChoice::
+	call SaveScreenTilesToBuffer1
+	call InitBoyGirlTextBoxParameters
+	jr DisplayBoyGirlChoice
+
+InitBoyGirlTextBoxParameters::
+   ld a, $1 ; loads the value for the unused North/West choice, that was changed to say Boy/Girl
+	ld [wTwoOptionMenuID], a
+	coord hl, 6, 5 
+	ld bc, $607
+	ret
+	
+DisplayBoyGirlChoice::
+	  ld a, $14
+	  ld [wTextBoxID], a
+	  call DisplayTextBoxID
+	  jp LoadScreenTilesFromBuffer1

@@ -37,7 +37,7 @@ TransformEffect_:
 	ld hl, AnimationTransformMon
 	ld b, BANK(AnimationTransformMon)
 .gotAnimToPlay
-	call Bankswitch
+	rst _Bankswitch
 	ld hl, ReshowSubstituteAnim
 	ld b, BANK(ReshowSubstituteAnim)
 	pop af

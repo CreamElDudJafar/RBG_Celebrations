@@ -36,10 +36,10 @@ _ExclamationText::
 	text "!"
 	done
 
-_GroundRoseText::
-	text "Ground rose up"
-	line "somewhere!"
-	done
+;_GroundRoseText:: ; unused
+;	text "Ground rose up"
+;	line "somewhere!"
+;	done
 
 _BoulderText::
 	text "This requires"

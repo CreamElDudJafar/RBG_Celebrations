@@ -4,7 +4,7 @@ _DaycareGentlemanAllRightThenText::
 	text_end
 
 _DaycareGentlemanComeAgainText::
-	text "come again."
+	text "Come again."
 	done
 
 _DaycareGentlemanNoRoomForMonText::

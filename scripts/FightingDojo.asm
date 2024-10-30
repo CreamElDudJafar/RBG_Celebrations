@@ -225,12 +225,8 @@ FightingDojoBlackbelt4AfterBattleText:
 
 FightingDojoHitmonleePokeBallText:
 	text_asm
-	CheckEitherEventSet EVENT_GOT_HITMONLEE, EVENT_GOT_HITMONCHAN
-	jr z, .GetMon
-	ld hl, FightingDojoBetterNotGetGreedyText
+	ld hl, FightingDojoBetterNotGetGreedyText2
 	call PrintText
-	jr .done
-.GetMon
 	ld a, HITMONLEE
 	call DisplayPokedex
 	ld hl, .Text
@@ -259,12 +255,8 @@ FightingDojoHitmonleePokeBallText:
 
 FightingDojoHitmonchanPokeBallText:
 	text_asm
-	CheckEitherEventSet EVENT_GOT_HITMONLEE, EVENT_GOT_HITMONCHAN
-	jr z, .GetMon
 	ld hl, FightingDojoBetterNotGetGreedyText
 	call PrintText
-	jr .done
-.GetMon
 	ld a, HITMONCHAN
 	call DisplayPokedex
 	ld hl, .Text
@@ -293,4 +285,8 @@ FightingDojoHitmonchanPokeBallText:
 
 FightingDojoBetterNotGetGreedyText:
 	text_far _FightingDojoBetterNotGetGreedyText
+	text_end
+	
+	FightingDojoBetterNotGetGreedyText2:
+	text_far _FightingDojoBetterNotGetGreedyText2
 	text_end

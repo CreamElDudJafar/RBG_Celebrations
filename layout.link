@@ -177,6 +177,13 @@ ROMX $2B
 	"Pokédex Text"
 ROMX $2C
 	"Move Names"
+ROMX $30
+	org $4000
+	"Party Mon Sprites Gfx 1"
+ROMX $31
+	org $4000
+	"Party Mon Sprites Gfx 2"
+	"Party Mon Sprites Routines"
 WRAM0
 	"Audio RAM"
 	org $c100

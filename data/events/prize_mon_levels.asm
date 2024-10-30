@@ -1,5 +1,5 @@
 PrizeMonLevelDictionary:
-IF DEF(_RED)
+IF (DEF(_RED) || DEF(_GREEN))
 	db ABRA,      9
 	db CLEFAIRY,  8
 	db NIDORINA, 17

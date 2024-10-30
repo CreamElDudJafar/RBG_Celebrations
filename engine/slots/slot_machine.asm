@@ -4,7 +4,7 @@ PromptUserToPlaySlots:
 	ld [wAutoTextBoxDrawingControl], a
 	ld b, a
 	ld hl, DisplayTextIDInit
-	call Bankswitch
+	rst _Bankswitch
 	ld hl, PlaySlotMachineText
 	call PrintText
 	call YesNoChoice
@@ -889,5 +889,8 @@ IF DEF(_RED)
 ENDC
 IF DEF(_BLUE)
 	INCBIN "gfx/slots/blue_slots_1.2bpp"
+ENDC
+IF DEF(_GREEN)
+	INCBIN "gfx/slots/green_slots_1.2bpp"
 ENDC
 SlotMachineTiles1End:

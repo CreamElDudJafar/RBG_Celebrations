@@ -41,7 +41,7 @@ DrawBadges:
 	ld hl, wBadgeNumberTile
 	ld a, $d8 ; [1]
 	ld [hli], a
-	ld [hl], $60 ; First name
+	ld [hl], $00 ; First name
 
 	hlcoord 2, 11
 	ld de, wTempObtainedBadgesBooleans
@@ -49,7 +49,8 @@ DrawBadges:
 
 	hlcoord 2, 14
 	ld de, wTempObtainedBadgesBooleans + 4
-	; fallthrough
+;	call .DrawBadgeRow
+;	ret
 
 .DrawBadgeRow
 ; Draw 4 badges.
@@ -68,18 +69,19 @@ DrawBadges:
 ; Names aren't printed if the badge is owned.
 	ld a, [de]
 	and a
-	ld a, [wBadgeNameTile]
+;	ld a, [wBadgeNameTile]
 	jr nz, .SkipName
-	call .PlaceTiles
+	call .PlaceTilesName
 	jr .PlaceBadge
 
 .SkipName
+	ld a, [wBadgeNameTile]
 	inc a
-	inc a
+	ld [wBadgeNameTile], a
 	inc hl
 
 .PlaceBadge
-	ld [wBadgeNameTile], a
+;	ld [wBadgeNameTile], a
 	ld de, SCREEN_WIDTH - 1
 	add hl, de
 	ld a, [wBadgeOrFaceTiles]
@@ -105,6 +107,44 @@ DrawBadges:
 	jr nz, .DrawBadge
 	ret
 
+.PlaceTilesName	;joenote - restoring leader names
+	push bc
+	push hl
+	
+	;get the correct tile list for the current leader
+	ld hl, LeaderNameList
+	ld bc, $0000
+	ld a, [wBadgeNameTile]
+	ld c, a
+	inc a	;increment the badge number while we're at it
+	ld [wBadgeNameTile], a
+	add hl, bc
+	add hl, bc
+	ld a, [hli]
+	push af
+	ld a, [hl]
+	ld b, a
+	pop af
+	ld c, a
+	
+	;BC now points to leader name tile list
+	;so let's push & pop HL real quick for printing to the screen
+	pop hl
+	push hl
+.nameloop
+	ld a, [bc]
+	and a
+	jr z, .nameloop_end
+	ld [hli], a
+	inc bc
+	jr .nameloop
+.nameloop_end
+	
+	pop hl
+	pop bc
+	inc hl
+	ret
+
 .PlaceTiles
 	ld [hli], a
 	inc a
@@ -114,6 +154,32 @@ DrawBadges:
 
 .FaceBadgeTiles
 	db $20, $28, $30, $38, $40, $48, $50, $58
+
+LeaderNameList:	;joenote - for restoring leader names
+	dw .brock
+	dw .misty
+	dw .surge
+	dw .erika
+	dw .koga
+	dw .sabrina
+	dw .blaine
+	dw .giovanni
+.brock
+	db $60,$61,$62,$00
+.misty
+	db $63,$64,$65,$00
+.surge
+	db $66,$67,$68,$00
+.erika
+	db $69,$6A,$00
+.koga
+	db $6B,$6C,$00
+.sabrina
+	db $6D,$6E,$6F,$00
+.blaine
+	db $70,$71,$72,$00
+.giovanni
+	db $73,$74,$00
 
 GymLeaderFaceAndBadgeTileGraphics:
 	INCBIN "gfx/trainer_card/badges.2bpp"

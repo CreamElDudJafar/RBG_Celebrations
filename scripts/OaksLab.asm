@@ -119,6 +119,7 @@ OaksLabFollowedOakScript:
 	call UpdateSprites
 	ld hl, wFlags_D733
 	res 1, [hl]
+	call DelayFrame
 	call PlayDefaultMusic
 
 	ld a, SCRIPT_OAKSLAB_OAK_CHOOSE_MON_SPEECH
@@ -1215,7 +1216,11 @@ OaksLabOakGotPokedexText:
 
 OaksLabOakThatWasMyDreamText:
 	text_far _OaksLabOakThatWasMyDreamText
-	text_end
+	db $11 ; play received item sound
+	text_asm
+	lb bc, POKE_BALL,5
+	call GiveItem
+	jp TextScriptEnd
 
 OaksLabRivalLeaveItAllToMeText:
 	text_far _OaksLabRivalLeaveItAllToMeText

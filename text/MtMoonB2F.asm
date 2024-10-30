@@ -22,7 +22,6 @@ _MtMoonB2FYouHaveNoRoomText::
 
 _MtMoonB2FSuperNerdTheyreBothMineText::
 	text "Hey, stop!"
-
 	para "I found these"
 	line "fossils! They're"
 	cont "both mine!"
@@ -30,13 +29,13 @@ _MtMoonB2FSuperNerdTheyreBothMineText::
 
 _MtMoonB2FSuperNerdOkIllShareText::
 	text "OK!"
-	line "I'll share!"
+	line "Go ahead!"
 	prompt
 
 _MtMoonB2fSuperNerdEachTakeOneText::
-	text "We'll each take"
-	line "one!"
-	cont "No being greedy!"
+	text "You can take"
+	line "both!"
+	cont "Take care of them!"
 	done
 
 _MtMoonB2FSuperNerdTheresAPokemonLabText::

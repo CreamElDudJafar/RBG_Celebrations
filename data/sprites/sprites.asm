@@ -67,6 +67,42 @@ SpriteSheetPointerTable:
 	overworld_sprite BrunoSprite, 12            ; SPRITE_BRUNO
 	overworld_sprite LoreleiSprite, 12          ; SPRITE_LORELEI
 	overworld_sprite SeelSprite, 12             ; SPRITE_SEEL
+	overworld_sprite PoliSprite, 12             ; SPRITE_POLI
+	overworld_sprite ArtSprite, 12              ; SPRITE_ART
+	overworld_sprite ChanSprite, 12             ; SPRITE_CHAN
+	overworld_sprite CleSprite, 12             ; SPRITE_CLE
+	overworld_sprite CuSprite, 12             ; SPRITE_CU
+	overworld_sprite KanSprite, 12             ; SPRITE_KAN
+	overworld_sprite LapSprite, 12             ; SPRITE_LAP
+	overworld_sprite MeoSprite, 12             ; SPRITE_MEO
+	overworld_sprite MewtwoSprite, 12             ; SPRITE_MEWTWO
+	overworld_sprite MolSprite, 12             ; SPRITE_MOL
+	overworld_sprite RinomSprite, 12             ; SPRITE_RINOM
+	overworld_sprite PidSprite, 12             ; SPRITE_PID
+	overworld_sprite PsySprite, 12             ; SPRITE_PSY
+	overworld_sprite BroSprite, 12             ; SPRITE_BRO
+	overworld_sprite SlowSprite, 12             ; SPRITE_SLOW
+	overworld_sprite SpeSprite, 12             ; SPRITE_SPE
+	overworld_sprite WiggSprite, 12             ; SPRITE_WIGG
+	overworld_sprite DuoSprite, 12             ; SPRITE_DUO
+	overworld_sprite FearSprite, 12             ; SPRITE_FEAR
+	overworld_sprite JiggSprite, 12             ; SPRITE_JIGG
+	overworld_sprite MachoSprite, 12             ; SPRITE_MACHO
+	overworld_sprite ChopSprite, 12             ; SPRITE_CHOP
+	overworld_sprite NidofSprite, 12             ; SPRITE_NIDOF
+	overworld_sprite NidomSprite, 12             ; SPRITE_NIDOM
+	overworld_sprite GeySprite, 12             ; SPRITE_GEY
+	overworld_sprite PikaSprite, 12             ; SPRITE_PIKA
+	overworld_sprite ZapSprite, 12             ; SPRITE_ZAP
+	overworld_sprite VoltorbSprite, 12         ; SPRITE_VOLTORB
+	overworld_sprite PikadollSprite, 12             ; SPRITE_PIKADOLL
+	overworld_sprite JiggdollSprite, 12             ; SPRITE_JIGGDOLL
+	overworld_sprite BrockSprite, 12
+	overworld_sprite MistySprite, 12
+	overworld_sprite SurgeSprite, 12
+	overworld_sprite ErikaSprite, 12
+	overworld_sprite SabrinaSprite, 12
+	overworld_sprite BlaineSprite, 12	
 	overworld_sprite PokeBallSprite, 4          ; SPRITE_POKE_BALL
 	overworld_sprite FossilSprite, 4            ; SPRITE_FOSSIL
 	overworld_sprite BoulderSprite, 4           ; SPRITE_BOULDER

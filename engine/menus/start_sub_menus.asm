@@ -318,7 +318,10 @@ StartMenu_Item::
 	ld [wListMenuID], a
 	ld a, [wBagSavedMenuItem]
 	ld [wCurrentMenuItem], a
+	ld a, 1
+	ld [wTempFlag], a
 	call DisplayListMenuID
+	jp nz, .sortItems
 	ld a, [wCurrentMenuItem]
 	ld [wBagSavedMenuItem], a
 	jr nc, .choseItem
@@ -337,11 +340,7 @@ StartMenu_Item::
 	call PlaceUnfilledArrowMenuCursor
 	xor a
 	ld [wMenuItemToSwap], a
-	ld a, [wcf91]
-	cp BICYCLE
-	jp z, .useOrTossItem
-.notBicycle1
-	ld a, USE_TOSS_MENU_TEMPLATE
+	ld a, USE_INFO_TOSS_MENU_TEMPLATE
 	ld [wTextBoxID], a
 	call DisplayTextBoxID
 	ld hl, wTopMenuItemY
@@ -352,7 +351,7 @@ StartMenu_Item::
 	xor a
 	ld [hli], a ; current menu item ID
 	inc hl
-	inc a ; a = 1
+	ld a, 2
 	ld [hli], a ; max menu item ID
 	ld a, A_BUTTON | B_BUTTON
 	ld [hli], a ; menu watched keys
@@ -368,21 +367,23 @@ StartMenu_Item::
 	ld [wd11e], a
 	call GetItemName
 	call CopyToStringBuffer
+	ld a, [wCurrentMenuItem]
+	cp a, 2
+	jr z, .tossItem
+	cp a, 1
+	jp z, .infoItem
 	ld a, [wcf91]
 	cp BICYCLE
-	jr nz, .notBicycle2
+	jr nz, .notBicycle
 	ld a, [wd732]
 	bit 5, a
 	jr z, .useItem_closeMenu
 	ld hl, CannotGetOffHereText
 	call PrintText
 	jp ItemMenuLoop
-.notBicycle2
-	ld a, [wCurrentMenuItem]
-	and a
-	jr nz, .tossItem
-; use item
-	ld [wPseudoItemID], a ; a must be 0 due to above conditional jump
+.notBicycle
+	xor a
+ld [wPseudoItemID], a
 	ld a, [wcf91]
 	cp HM01
 	jr nc, .useItem_partyMenu
@@ -437,6 +438,12 @@ StartMenu_Item::
 	call TossItem
 .tossZeroItems
 	jp ItemMenuLoop
+.infoItem
+	farcall DisplayItemDescription
+	jp ItemMenuLoop
+.sortItems
+	callfar SortItems
+	jp ItemMenuLoop
 
 CannotUseItemsHereText:
 	text_far _CannotUseItemsHereText
@@ -478,7 +485,13 @@ StartMenu_TrainerInfo::
 DrawTrainerInfo:
 	ld de, RedPicFront
 	lb bc, BANK(RedPicFront), $01
-	predef DisplayPicCenteredOrUpperRight
+	ld a, [wPlayerGender]
+    		and a
+   		jr z, .AreBoy
+    		ld de, GreenPicFront
+    		lb bc, BANK(GreenPicFront), $01
+.AreBoy
+    	predef DisplayPicCenteredOrUpperRight
 	call DisableLCD
 	hlcoord 0, 2
 	ld a, " "
@@ -496,7 +509,11 @@ DrawTrainerInfo:
 	call TrainerInfo_FarCopyData
 	ld hl, BlankLeaderNames
 	ld de, vChars2 tile $60
-	ld bc, $17 tiles
+	ld bc, $15 tiles
+	call TrainerInfo_FarCopyData
+	ld hl, CircleTile
+	ld de, vChars2 + $760
+	ld bc, $10
 	call TrainerInfo_FarCopyData
 	pop bc
 	ld hl, BadgeNumbersTileGraphics  ; badge number tile patterns
@@ -663,7 +680,7 @@ SwitchPartyMon::
 	call SwitchPartyMon_ClearGfx
 	ld a, [wCurrentMenuItem]
 	call SwitchPartyMon_ClearGfx
-	jp RedrawPartyMenu_
+	jp RedrawPartyMenu_ReloadSprites
 
 SwitchPartyMon_ClearGfx:
 	push af
@@ -806,3 +823,45 @@ SwitchPartyMon_InitVarOrSwapData:
 	pop de
 	pop hl
 	ret
+
+StartMenu_PortablePC:: ; new
+	ld a, [wCurMap] ; we don't want to cheese the Elite4, do we?
+	cp LORELEIS_ROOM
+	jr z, .cantUseItHere
+	cp BRUNOS_ROOM
+	jr z, .cantUseItHere
+	cp AGATHAS_ROOM
+	jr z, .cantUseItHere
+	cp LANCES_ROOM
+	jr z, .cantUseItHere
+; if none of the above cp is met, let's open the pc and do the things
+; next piece is to preserve the map text pointers
+	ld hl, wCurMapTextPtr
+	ld a, [hli]
+	ld [wUniQuizAnswer], a
+	ld a, [hl]
+	ld [wUniQuizAnswer+1], a
+; normal stuff
+	callfar ActivatePC ; main part
+	jr .done
+.cantUseItHere ; no cheese!
+	ld hl, CantUsePCHere
+	call PrintText
+.done
+	; next piece is to preserve the map text pointers
+	push hl
+	ld hl, wUniQuizAnswer
+	ld a, [hli]
+	ld [wCurMapTextPtr], a
+	ld a, [hl]
+	ld [wCurMapTextPtr+1], a
+	pop hl
+; normal stuff
+	call LoadScreenTilesFromBuffer2 ; restore saved screen
+	call LoadTextBoxTilePatterns
+	call UpdateSprites
+	jp RedisplayStartMenu
+
+CantUsePCHere:
+	text_far _CantUsePCHere
+	text_end

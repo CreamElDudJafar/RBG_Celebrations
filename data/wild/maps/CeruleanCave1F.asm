@@ -5,7 +5,7 @@ CeruleanCave1FWildMons:
 	db 46, MAGNETON
 	db 49, DODRIO
 	db 49, VENOMOTH
-IF DEF(_RED)
+IF (DEF(_RED) || DEF(_GREEN)) 
 	db 52, ARBOK
 ENDC
 IF DEF(_BLUE)

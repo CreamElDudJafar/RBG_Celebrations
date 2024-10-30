@@ -14,3 +14,6 @@ FuchsiaMartMiddleAgedManText:
 FuchsiaMartCooltrainerFText:
 	text_far _FuchsiaMartCooltrainerFText
 	text_end
+
+FuchsiaMartClerkText::
+	script_mart GREAT_BALL, ULTRA_BALL, SUPER_POTION, HYPER_POTION, REVIVE

@@ -13,6 +13,7 @@ FuchsiaCity_TextPointers:
 	dw_const FuchsiaCityPokemonText,         TEXT_FUCHSIACITY_SLOWPOKE
 	dw_const FuchsiaCityPokemonText,         TEXT_FUCHSIACITY_LAPRAS
 	dw_const FuchsiaCityPokemonText,         TEXT_FUCHSIACITY_FOSSIL
+	dw_const FuchsiaCityPokemonText,         TEXT_FUCHSIACITY_FOSSIL2
 	dw_const FuchsiaCitySignText,            TEXT_FUCHSIACITY_SIGN1
 	dw_const FuchsiaCitySignText,            TEXT_FUCHSIACITY_SIGN2
 	dw_const FuchsiaCitySafariGameSignText,  TEXT_FUCHSIACITY_SAFARI_GAME_SIGN
@@ -130,25 +131,15 @@ FuchsiaCityLaprasSignText:
 
 FuchsiaCityFossilSignText:
 	text_asm
-	CheckEvent EVENT_GOT_DOME_FOSSIL
-	jr nz, .got_dome_fossil
-	CheckEventReuseA EVENT_GOT_HELIX_FOSSIL
-	jr nz, .got_helix_fossil
-	ld hl, .UndeterminedText
-	call PrintText
-	jr .done
-.got_dome_fossil
+
 	ld hl, .OmanyteText
 	call PrintText
 	ld a, OMANYTE
-	jr .display
-.got_helix_fossil
+	call DisplayPokedex
 	ld hl, .KabutoText
 	call PrintText
 	ld a, KABUTO
-.display
 	call DisplayPokedex
-.done
 	jp TextScriptEnd
 
 .OmanyteText:

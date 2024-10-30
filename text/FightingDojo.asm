@@ -27,11 +27,11 @@ _FightingDojoKarateMasterIWillGiveYouAPokemonText::
 	cont "your trophy!"
 
 	para "In return, I will"
-	line "give you a prized"
+	line "give you our gym's"
 	cont "fighting #MON!"
 
-	para "Choose whichever"
-	line "one you like!"
+	para "Take them both and"
+	line "train them well!"
 	done
 
 _FightingDojoKarateMasterStayAndTrainWithUsText::
@@ -113,18 +113,25 @@ _FightingDojoBlackbelt4AfterBattleText::
 	done
 
 _FightingDojoHitmonleePokeBallText::
-	text "You want the"
-	line "hard kicking"
-	cont "HITMONLEE?"
+	text "Do you want"
+	line "HITMONLEE?"
+	prompt
 	done
 
 _FightingDojoHitmonchanPokeBallText::
-	text "You want the"
-	line "piston punching"
-	cont "HITMONCHAN?"
+	text "Do you want"
+	line "HITMONCHAN?"
+	prompt 
 	done
 
 _FightingDojoBetterNotGetGreedyText::
-	text "Better not get"
-	line "greedy..."
+	text "The piston"
+	line "punching #MON!"
+	prompt
+	done
+	
+_FightingDojoBetterNotGetGreedyText2::
+	text "The hard kicking"
+	line "#MON!"
+	prompt
 	done

@@ -8,13 +8,13 @@ PowerPlantWildMons:
 	db 23, VOLTORB
 	db 32, MAGNETON
 	db 35, MAGNETON
-IF DEF(_RED)
-	db 33, ELECTABUZZ
+IF (DEF(_RED) || DEF(_GREEN)) 
+	db 33, RAICHU
 	db 36, ELECTABUZZ
 ENDC
 IF DEF(_BLUE)
 	db 33, RAICHU
-	db 36, RAICHU
+	db 36, ELECTABUZZ
 ENDC
 	end_grass_wildmons
 

@@ -39,6 +39,7 @@ PredefPointers::
 	add_predef LearnMoveFromLevelUp
 	add_predef LearnMove
 	add_predef GetQuantityOfItemInBag
+	add_predef GetIndexOfItemInBag
 	add_predef CheckForHiddenObjectOrBookshelfOrCardKeyDoor, $03 ; home bank
 	add_predef GiveItem, $03 ; home bank
 	add_predef ChangeBGPalColor0_4Frames
@@ -109,3 +110,4 @@ PredefPointers::
 	add_predef DrawHP2
 	add_predef DisplayElevatorFloorMenu
 	add_predef OaksAideScript
+	add_predef TryFieldMove

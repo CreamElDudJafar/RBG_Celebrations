@@ -20,7 +20,8 @@
 	     SEISMIC_TOSS, RAGE,         THUNDERBOLT,  THUNDER,      EARTHQUAKE,   \
 	     FISSURE,      MIMIC,        DOUBLE_TEAM,  REFLECT,      BIDE,         \
 	     FIRE_BLAST,   SKULL_BASH,   REST,         ROCK_SLIDE,   SUBSTITUTE,   \
-	     SURF,         STRENGTH
+	     SURF,         STRENGTH, 	 DIG
 	; end
 
-	db 0 ; padding
+	db BANK(NidokingPicFront)
+	assert BANK(NidokingPicFront) == BANK(NidokingPicBack)

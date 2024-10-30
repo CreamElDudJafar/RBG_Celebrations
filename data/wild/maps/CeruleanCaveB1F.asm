@@ -6,7 +6,7 @@ CeruleanCaveB1FWildMons:
 	db 64, CHANSEY
 	db 64, PARASECT
 	db 64, RAICHU
-IF DEF(_RED)
+IF (DEF(_RED) || DEF(_GREEN)) 
 	db 57, ARBOK
 ENDC
 IF DEF(_BLUE)

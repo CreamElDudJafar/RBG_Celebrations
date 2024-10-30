@@ -1,6 +1,6 @@
 SafariZoneNorthWildMons:
 	def_grass_wildmons 30 ; encounter rate
-IF DEF(_RED)
+IF (DEF(_RED) || DEF(_GREEN)) 
 	db 22, NIDORAN_M
 	db 26, RHYHORN
 	db 23, PARAS

@@ -16,3 +16,33 @@ _PewterGymBrockPreBattleText::
 	cont "Fine then! Show"
 	cont "me your best!"
 	done
+
+_PewterGymRematchPreBattle1Text::
+	text "Since our last"
+	line "battle, my"
+	
+	para "#MON are"
+	line "much stronger!"
+
+	para "Ready for a"
+	line "rematch?"
+	done
+
+_GymRematchRefusedText::
+	text "Maybe some other"
+	line "time."
+	done
+
+_PewterGymPreRematchBattle2Text::
+	text "Let's begin!"
+	done
+
+_PewterGymRematchPostBattleText::
+	text "Incredible!"
+
+	para "You are the"
+	line "CHAMPION!"
+
+	para "True to your"
+	line "title, CHAMPION!"
+	done

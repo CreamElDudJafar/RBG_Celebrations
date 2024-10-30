@@ -1,11 +1,11 @@
 Route13WildMons:
 	def_grass_wildmons 20 ; encounter rate
-IF DEF(_RED)
+IF (DEF(_RED) || DEF(_GREEN)) 
 	db 24, ODDISH
 	db 25, PIDGEY
 	db 27, PIDGEY
-	db 24, VENONAT
-	db 22, ODDISH
+	db 24, FARFETCHD
+	db 28, FARFETCHD
 	db 26, VENONAT
 	db 26, ODDISH
 	db 25, DITTO
@@ -16,8 +16,8 @@ IF DEF(_BLUE)
 	db 24, BELLSPROUT
 	db 25, PIDGEY
 	db 27, PIDGEY
-	db 24, VENONAT
-	db 22, BELLSPROUT
+	db 24, FARFETCHD
+	db 28, FARFETCHD
 	db 26, VENONAT
 	db 26, BELLSPROUT
 	db 25, DITTO

@@ -43,7 +43,7 @@ GainExperience:
 	inc de
 	jr .nextBaseStat
 .maxStatExp ; if the upper byte also overflowed, then we have hit the max stat exp
-	ld a, $ff
+	dec a ; ld a, $ff; a is 0 from previous check
 	ld [de], a
 	inc de
 	ld [de], a
@@ -117,6 +117,43 @@ GainExperience:
 	ld [wd0b5], a
 	call GetMonHeader
 	ld d, MAX_LEVEL
+
+	ld a, [wDifficulty] ; Check if player is on hard mode
+	and a
+	jr z, .next1 ; no level caps if not on hard mode
+
+	ld a, [wGameStage] ; Check if player has beat the game
+	and a
+	ld d, 100
+	jr nz, .next1
+	call GetBadgesObtained
+	ld a, [wNumSetBits]
+	cp 8
+	ld d, 65 ; Blastoise/Charizard/Venusaur's level
+	jr nc, .next1
+	cp 7
+	ld d, 50 ; Rhydon's level
+	jr nc, .next1
+	cp 6
+	ld d, 48 ; Arcanine's level
+	jr nc, .next1
+	cp 5
+	ld d, 46 ; Alakazam's level
+	jr nc, .next1
+    cp 4
+	ld d, 44 ; Weezing's level
+	jr nc, .next1
+	cp 3
+	ld d, 37 ; Villeplume's level
+	jr nc, .next1
+	cp 2
+        ld d, 28 ; Raichu's level
+	jr nc, .next1
+	cp 1
+	ld d, 22 ; Starmie's level
+	jr nc, .next1
+	ld d, 15 ; Onix's level
+.next1
 	callfar CalcExperience ; get max exp
 ; compare max exp with current exp
 	ldh a, [hExperience]
@@ -150,7 +187,7 @@ GainExperience:
 	call PrintText
 	xor a ; PLAYER_PARTY_DATA
 	ld [wMonDataLocation], a
-	call LoadMonData
+	call AnimateEXPBar
 	pop hl
 	ld bc, wPartyMon1Level - wPartyMon1Exp
 	add hl, bc
@@ -160,7 +197,7 @@ GainExperience:
 	ld a, [hl] ; current level
 	cp d
 	jp z, .nextMon ; if level didn't change, go to next mon
-	ld a, [wCurEnemyLVL]
+	call KeepEXPBarFull
 	push af
 	push hl
 	ld a, d
@@ -244,7 +281,7 @@ GainExperience:
 	call PrintText
 	xor a ; PLAYER_PARTY_DATA
 	ld [wMonDataLocation], a
-	call LoadMonData
+	call AnimateEXPBarAgain
 	ld d, $1
 	callfar PrintStatsBox
 	call WaitForTextScrollButtonPress
@@ -370,3 +407,19 @@ GrewLevelText:
 	text_far _GrewLevelText
 	sound_level_up
 	text_end
+
+; function to count the set bits in wObtainedBadges
+; OUTPUT:
+; a = set bits in wObtainedBadges
+GetBadgesObtained::
+	push hl
+	push bc
+	push de
+	ld hl, wObtainedBadges
+	ld b, $1
+	call CountSetBits
+	pop de
+	pop bc
+	pop hl
+	ld a, [wNumSetBits]
+	ret

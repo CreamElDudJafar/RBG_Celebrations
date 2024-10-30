@@ -208,8 +208,6 @@ PlayerBlackedOutText::
 DisplayRepelWoreOffText::
 	ld hl, RepelWoreOffText
 	call PrintText
-	jp AfterDisplayingTextID
+	callfar UseAnotherRepel ; PureRGBnote: ADDED: when repel wears off ask to use another if available
+	jp CloseTextDisplay
 
-RepelWoreOffText::
-	text_far _RepelWoreOffText
-	text_end

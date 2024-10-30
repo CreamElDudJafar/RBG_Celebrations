@@ -1,6 +1,6 @@
 SeafoamIslandsB1FWildMons:
 	def_grass_wildmons 10 ; encounter rate
-IF DEF(_RED)
+IF (DEF(_RED) || DEF(_GREEN)) 
 	db 30, STARYU
 	db 30, HORSEA
 	db 32, SHELLDER

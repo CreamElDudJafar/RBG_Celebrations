@@ -1,7 +1,8 @@
 ; rst vectors (unused)
 
 SECTION "rst0", ROM0[$0000]
-	rst $38
+	_Bankswitch::
+	jp Bankswitch
 
 	ds $08 - @, 0 ; unused
 
@@ -32,11 +33,16 @@ SECTION "rst28", ROM0[$0028]
 
 SECTION "rst30", ROM0[$0030]
 	rst $38
+	
+RepelWoreOffText::
+	text_far _RepelWoreOffText
+	text_end																													
+
 
 	ds $38 - @, 0 ; unused
 
 SECTION "rst38", ROM0[$0038]
-	rst $38
+
 
 	ds $40 - @, 0 ; unused
 

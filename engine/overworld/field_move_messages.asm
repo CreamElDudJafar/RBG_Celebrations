@@ -37,11 +37,13 @@ IsSurfingAllowed:
 	ret nc
 	ld hl, wd728
 	res 1, [hl]
+	callfar InitializeFieldMoveTextBox
 	ld hl, CurrentTooFastText
 	jp PrintText
 .forcedToRideBike
 	ld hl, wd728
 	res 1, [hl]
+	callfar InitializeFieldMoveTextBox
 	ld hl, CyclingIsFunText
 	jp PrintText
 

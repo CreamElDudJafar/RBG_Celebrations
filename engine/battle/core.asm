@@ -308,7 +308,7 @@ MainInBattleLoop:
 	and a
 	ret nz ; return if pokedoll was used to escape from battle
 	ld a, [wBattleMonStatus]
-	and (1 << FRZ) | SLP_MASK
+	and (1 << FRZ)
 	jr nz, .selectEnemyMove ; if so, jump
 	ld a, [wPlayerBattleStatus1]
 	and (1 << STORING_ENERGY) | (1 << USING_TRAPPING_MOVE) ; check player is using Bide or using a multi-turn attack like wrap
@@ -773,6 +773,10 @@ FaintEnemyPokemon:
 	hlcoord 0, 0
 	lb bc, 4, 11
 	call ClearScreenArea
+	call AnyPartyAlive
+	ld a, d
+	and a
+	push af
 	ld a, [wIsInBattle]
 	dec a
 	jr z, .wild_win
@@ -791,11 +795,11 @@ FaintEnemyPokemon:
 	jr .sfxplayed
 .wild_win
 	call EndLowHealthAlarm
+	pop af
+	push af
 	ld a, MUSIC_DEFEATED_WILD_MON
-	call PlayBattleVictoryMusic
+	call nz, PlayBattleVictoryMusic
 .sfxplayed
-; bug: win sfx is played for wild battles before checking for player mon HP
-; this can lead to odd scenarios where both player and enemy faint, as the win sfx plays yet the player never won the battle
 	ld hl, wBattleMonHP
 	ld a, [hli]
 	or [hl]
@@ -805,9 +809,7 @@ FaintEnemyPokemon:
 	jr nz, .playermonnotfaint ; if so, don't call RemoveFaintedPlayerMon twice
 	call RemoveFaintedPlayerMon
 .playermonnotfaint
-	call AnyPartyAlive
-	ld a, d
-	and a
+	pop af
 	ret z
 	ld hl, EnemyMonFaintedText
 	call PrintText
@@ -922,8 +924,19 @@ TrainerBattleVictory:
 .gymleader
 	ld a, [wTrainerClass]
 	cp RIVAL3 ; final battle against rival
+	jr z, .special1998
+	cp LORELEI
+	jr z, .special1998
+	cp BRUNO
+	jr z, .special1998
+	cp AGATHA
+	jr z, .special1998
+	cp LANCE
 	jr nz, .notrival
+.special1998
 	ld b, MUSIC_DEFEATED_GYM_LEADER
+	cp RIVAL3 ; final battle against rival
+	jr nz, .notrival
 	ld hl, wFlags_D733
 	set 1, [hl]
 .notrival
@@ -1371,6 +1384,11 @@ EnemySendOutFirstMon:
 	ld a, [wLinkState]
 	cp LINK_STATE_BATTLING
 	jr z, .next4
+	ld a, [wDifficulty] ; Check if player is on hard mode
+	and a
+	jr z, .DontForceSetMode
+	jr .next4 ; skip switch request on hard mode
+.DontForceSetMode
 	ld a, [wOptions]
 	bit BIT_BATTLE_SHIFT, a
 	jr nz, .next4
@@ -1424,7 +1442,11 @@ EnemySendOutFirstMon:
 	ld [wd0b5], a
 	call GetMonHeader
 	ld de, vFrontPic
-	call LoadMonFrontSprite
+	call IsGhostBattle
+	push af
+	call nz, LoadMonFrontSprite
+	pop af
+	call z, LoadGhostPic
 	ld a, -$31
 	ldh [hStartTileID], a
 	hlcoord 15, 6
@@ -1823,6 +1845,7 @@ DrawPlayerHUDAndHPBar:
 	hlcoord 10, 7
 	call CenterMonName
 	call PlaceString
+	call PrintEXPBar
 	ld hl, wBattleMonSpecies
 	ld de, wLoadedMon
 	ld bc, wBattleMonDVs - wBattleMonSpecies
@@ -1878,10 +1901,36 @@ DrawEnemyHUDAndHPBar:
 	lb bc, 4, 12
 	call ClearScreenArea
 	callfar PlaceEnemyHUDTiles
+	;============================== start of code to add the caught symbol
+	ld a, [wIsInBattle] ;dannyE fix
+	dec a ;dannyE fix
+	jr  nz, .notWildBattle ;dannyE fix
+	push hl
+	ld a, [wEnemyMonSpecies2]
+	ld [wd11e], a
+	ld hl, IndexToPokedex
+	ld b, BANK(IndexToPokedex)
+	call Bankswitch
+	ld a, [wd11e]
+	dec a
+	ld c, a
+	ld b, FLAG_TEST
+	ld hl, wPokedexOwned
+	predef FlagActionPredef
+	ld a, c
+	and a
+	jr z, .notOwned
+	coord hl, 1, 1 ; horizontal/vertical
+	ld [hl], $D0 ; replace this with your Poké Ball icon or other character
+	.notOwned
+	pop hl
+	.notWildBattle ;dannyE fix
+	;============================== end of new code
 	ld de, wEnemyMonNick
 	hlcoord 1, 0
 	call CenterMonName
 	call PlaceString
+							   
 	hlcoord 4, 1
 	push hl
 	inc hl
@@ -2160,7 +2209,7 @@ DisplayBattleMenu::
 .throwSafariBallWasSelected
 	ld a, SAFARI_BALL
 	ld [wcf91], a
-	jr UseBagItem
+	jp UseBagItem
 
 .upperLeftMenuItemWasNotSelected ; a menu item other than the upper left item was selected
 	cp $2
@@ -2187,6 +2236,7 @@ DisplayBattleMenu::
 	ld [wcf91], a
 	jr UseBagItem
 
+
 BagWasSelected:
 	call LoadScreenTilesFromBuffer1
 	ld a, [wBattleType]
@@ -2197,18 +2247,33 @@ BagWasSelected:
 	call DrawHUDsAndHPBars
 .next
 	ld a, [wBattleType]
-	dec a ; is it the old man tutorial?
-	jr nz, DisplayPlayerBag ; no, it is a normal battle
-	ld hl, OldManItemList
+	cp BATTLE_TYPE_OLD_MAN ; is it the old man tutorial?
+	jr z, .simulatedInputBattle
+
+	ld a, [wDifficulty] ; Check if player is on hard mode
+	and a
+	jr z, .NormalMode
+
+	ld a, [wIsInBattle] ; Check if this is a wild battle or trainer battle
+	dec a
+	jr z, .NormalMode ; Not a trainer battle
+
+	ld hl, ItemsCantBeUsedHereText ; items can't be used during trainer battles in hard mode
+	call PrintText
+	jp DisplayBattleMenu
+.NormalMode
+	jr DisplayPlayerBag
+.simulatedInputBattle
+	ld hl, SimulatedInputBattleItemList
 	ld a, l
 	ld [wListPointer], a
 	ld a, h
 	ld [wListPointer + 1], a
 	jr DisplayBagMenu
 
-OldManItemList:
+SimulatedInputBattleItemList:
 	db 1 ; # items
-	db POKE_BALL, 50
+	db POKE_BALL, 30
 	db -1 ; end
 
 DisplayPlayerBag:
@@ -2387,7 +2452,7 @@ PartyMenuOrRockOrRun:
 	jr .enemyMonPicReloaded
 .doEnemyMonAnimation
 	ld b, BANK(AnimationSubstitute) ; BANK(AnimationMinimizeMon)
-	call Bankswitch
+	rst _Bankswitch
 .enemyMonPicReloaded ; enemy mon pic has been reloaded, so return to the party menu
 	jp .partyMenuWasSelected
 .switchMon
@@ -2883,6 +2948,10 @@ PrintMenuItem:
 	hlcoord 1, 9
 	ld de, TypeText
 	call PlaceString
+	hlcoord 1, 11
+	ld a, "<BOLD_P>"
+	ld [hli], a
+	ld [hl], "<BOLD_P>"
 	hlcoord 7, 11
 	ld [hl], "/"
 	hlcoord 5, 9
@@ -3114,7 +3183,7 @@ PlayerCanExecuteMove:
 	ld hl, DecrementPP
 	ld de, wPlayerSelectedMove ; pointer to the move just used
 	ld b, BANK(DecrementPP)
-	call Bankswitch
+	rst _Bankswitch
 	ld a, [wPlayerMoveEffect] ; effect of the move just used
 	ld hl, ResidualEffects1
 	ld de, 1
@@ -3341,6 +3410,7 @@ CheckPlayerStatusConditions:
 .WakeUp
 	ld hl, WokeUpText
 	call PrintText
+	jr z, .FrozenCheck
 .sleepDone
 	xor a
 	ld [wPlayerUsedMove], a
@@ -3711,11 +3781,6 @@ PrintMonName1Text:
 	ld hl, MonName1Text
 	jp PrintText
 
-; this function wastes time calling DetermineExclamationPointTextNum
-; and choosing between Used1Text and Used2Text, even though
-; those text strings are identical and both continue at PrintInsteadText
-; this likely had to do with Japanese grammar that got translated,
-; but the functionality didn't get removed
 MonName1Text:
 	text_far _MonName1Text
 	text_asm
@@ -3729,25 +3794,11 @@ MonName1Text:
 .playerTurn
 	ld [hl], a
 	ld [wd11e], a
-	call DetermineExclamationPointTextNum
-	ld a, [wMonIsDisobedient]
-	and a
-	ld hl, Used2Text
-	ret nz
-	ld a, [wd11e]
-	cp 3
-	ld hl, Used2Text
-	ret c
-	ld hl, Used1Text
+	ld hl, UsedText
 	ret
 
-Used1Text:
-	text_far _Used1Text
-	text_asm
-	jr PrintInsteadText
-
-Used2Text:
-	text_far _Used2Text
+UsedText:
+	text_far _UsedText
 	text_asm
 	; fall through
 
@@ -3770,76 +3821,12 @@ PrintMoveName:
 _PrintMoveName:
 	text_far _MoveNameText
 	text_asm
-	ld hl, ExclamationPointPointerTable
-	ld a, [wd11e] ; exclamation point num
-	add a
-	push bc
-	ld b, $0
-	ld c, a
-	add hl, bc
-	pop bc
-	ld a, [hli]
-	ld h, [hl]
-	ld l, a
+	ld hl, ExclamationPointText
 	ret
 
-ExclamationPointPointerTable:
-	dw ExclamationPoint1Text
-	dw ExclamationPoint2Text
-	dw ExclamationPoint3Text
-	dw ExclamationPoint4Text
-	dw ExclamationPoint5Text
-
-ExclamationPoint1Text:
-	text_far _ExclamationPoint1Text
+ExclamationPointText:
+	text_far _ExclamationPointText
 	text_end
-
-ExclamationPoint2Text:
-	text_far _ExclamationPoint2Text
-	text_end
-
-ExclamationPoint3Text:
-	text_far _ExclamationPoint3Text
-	text_end
-
-ExclamationPoint4Text:
-	text_far _ExclamationPoint4Text
-	text_end
-
-ExclamationPoint5Text:
-	text_far _ExclamationPoint5Text
-	text_end
-
-; this function does nothing useful
-; if the move being used is in set [1-4] from ExclamationPointMoveSets,
-; use ExclamationPoint[1-4]Text
-; otherwise, use ExclamationPoint5Text
-; but all five text strings are identical
-; this likely had to do with Japanese grammar that got translated,
-; but the functionality didn't get removed
-DetermineExclamationPointTextNum:
-	push bc
-	ld a, [wd11e] ; move ID
-	ld c, a
-	ld b, $0
-	ld hl, ExclamationPointMoveSets
-.loop
-	ld a, [hli]
-	cp $ff
-	jr z, .done
-	cp c
-	jr z, .done
-	and a
-	jr nz, .loop
-	inc b
-	jr .loop
-.done
-	ld a, b
-	ld [wd11e], a ; exclamation point num
-	pop bc
-	ret
-
-INCLUDE "data/moves/grammar.asm"
 
 PrintMoveFailureText:
 	ld de, wPlayerMoveEffect
@@ -3856,7 +3843,7 @@ PrintMoveFailureText:
 	ld a, [wCriticalHitOrOHKO]
 	cp $ff
 	jr nz, .gotTextToPrint
-	ld hl, UnaffectedText
+	ld hl, IsUnaffectedText
 .gotTextToPrint
 	push de
 	call PrintText
@@ -3904,10 +3891,6 @@ AttackMissedText:
 
 KeptGoingAndCrashedText:
 	text_far _KeptGoingAndCrashedText
-	text_end
-
-UnaffectedText:
-	text_far _UnaffectedText
 	text_end
 
 PrintDoesntAffectText:
@@ -3971,13 +3954,50 @@ CheckForDisobedience:
 	ld a, [wPlayerID]
 	cp [hl]
 	jr nz, .monIsTraded
+
+	ld a, [wDifficulty] ; Check if player is on hard mode
+	and a
+	jr z, .NormalMode2
+; what level might disobey?
+	ld a, [wGameStage] ; Check if player has beat the game
+	and a
+	ld a, 101
+	jr nz, .next
+	farcall GetBadgesObtained
+	ld a, [wNumSetBits]
+	cp 8
+	ld a, 65 ; Blastoise/Charizard/Venusaur's level
+	jr nc, .next
+	cp 7
+	ld a, 50 ; Rhydon's level
+	jr nc, .next
+	cp 6
+	ld a, 48 ; Arcanine's level
+	jr nc, .next
+	cp 5
+	ld a, 46 ; Alakazam's level
+	jr nc, .next
+    cp 4
+	ld a, 44 ; Weezing's level
+	jr nc, .next
+	cp 3
+	ld a, 37 ; Vileplume's level
+	jr nc, .next
+	cp 2
+        ld a, 28 ; Raichu's level
+	jr nc, .next
+	cp 1
+	ld a, 22 ; Starmie's level
+	jr nc, .next
+	ld a, 15 ; Onix's level
+	jp .next
+.NormalMode2
 	inc hl
 	ld a, [wPlayerID + 1]
 	cp [hl]
-	jp z, .canUseMove
-; it was traded
+	jp z, .canUseMove ; on normal mode non traded pokemon will always obey
+	; it was traded
 .monIsTraded
-; what level might disobey?
 	ld hl, wObtainedBadges
 	bit BIT_EARTHBADGE, [hl]
 	ld a, 101
@@ -4308,6 +4328,7 @@ GetDamageVarsForEnemyAttack:
 	call GetEnemyMonStat
 	ld hl, hProduct + 2
 	pop bc
+							   
 	jr .scaleStats
 .specialAttack
 	ld hl, wBattleMonSpecial
@@ -4614,7 +4635,6 @@ CriticalHitTest:
 	call GetMonHeader
 	ld a, [wMonHBaseSpeed]
 	ld b, a
-	srl b                        ; (effective (base speed/2))
 	ldh a, [hWhoseTurn]
 	and a
 	ld hl, wPlayerMovePower
@@ -4627,18 +4647,7 @@ CriticalHitTest:
 	and a
 	ret z                        ; do nothing if zero
 	dec hl
-	ld c, [hl]                   ; read move id
-	ld a, [de]
-	bit GETTING_PUMPED, a        ; test for focus energy
-	jr nz, .focusEnergyUsed      ; bug: using focus energy causes a shift to the right instead of left,
-	                             ; resulting in 1/4 the usual crit chance
-	sla b                        ; (effective (base speed/2)*2)
-	jr nc, .noFocusEnergyUsed
-	ld b, $ff                    ; cap at 255/256
-	jr .noFocusEnergyUsed
-.focusEnergyUsed
-	srl b
-.noFocusEnergyUsed
+	ld c, [hl]                   ; read move id	
 	ld hl, HighCriticalMoves     ; table of high critical hit moves
 .Loop
 	ld a, [hli]                  ; read move from move table
@@ -4646,17 +4655,53 @@ CriticalHitTest:
 	jr z, .HighCritical          ; if so, the move about to be used is a high critical hit ratio move
 	inc a                        ; move on to the next move, FF terminates loop
 	jr nz, .Loop                 ; check the next move in HighCriticalMoves
-	srl b                        ; /2 for regular move (effective (base speed / 2))
+	srl b                        ; /2 for regular move
 	jr .SkipHighCritical         ; continue as a normal move
 .HighCritical
 	sla b                        ; *2 for high critical hit moves
 	jr nc, .noCarry
 	ld b, $ff                    ; cap at 255/256
 .noCarry
-	sla b                        ; *4 for high critical move (effective (base speed/2)*8))
+	sla b                        ; *4 for high critical move
 	jr nc, .SkipHighCritical
 	ld b, $ff
 .SkipHighCritical
+
+	ld a, [de]
+	bit GETTING_PUMPED, a        ; test for focus energy
+	;jr nz, .focusEnergyUsed      ; bug: using focus energy causes a shift to the right instead of left,
+	;                             ; resulting in 1/4 the usual crit chance
+	jr z, .noFocusEnergyUsed
+	;sla b                        ; (effective (base speed/2)*2)
+	sla b                        ; (effective (base speed*2))
+	;jr nc, .noFocusEnergyUsed
+	jr nc, .focusEnergyUsed
+	ld b, $ff                    ; cap at 255/256
+	jr .noFocusEnergyUsed
+.focusEnergyUsed
+	;srl b
+	sla b                        ; (effective ((base speed*2)*2))
+	jr nc, .noFocusEnergyUsed
+	ld b, $ff                    ; cap at 255/256	
+.noFocusEnergyUsed
+	;ld hl, HighCriticalMoves     ; table of high critical hit moves
+;.Loop
+;	ld a, [hli]                  ; read move from move table
+;	cp c                         ; does it match the move about to be used?
+;	jr z, .HighCritical          ; if so, the move about to be used is a high critical hit ratio move
+;	inc a                        ; move on to the next move, FF terminates loop
+;	jr nz, .Loop                 ; check the next move in HighCriticalMoves
+;	srl b                        ; /2 for regular move (effective (base speed / 2))
+;	jr .SkipHighCritical         ; continue as a normal move
+;.HighCritical
+;	sla b                        ; *2 for high critical hit moves
+;	jr nc, .noCarry
+;	ld b, $ff                    ; cap at 255/256
+;.noCarry
+;	sla b                        ; *4 for high critical move (effective (base speed/2)*8))
+;	jr nc, .SkipHighCritical
+;	ld b, $ff
+;.SkipHighCritical
 	call BattleRandom            ; generates a random value, in "a"
 	rlc a
 	rlc a
@@ -4665,6 +4710,20 @@ CriticalHitTest:
 	ret nc                       ; no critical hit if no borrow
 	ld a, $1
 	ld [wCriticalHitOrOHKO], a   ; set critical hit flag
+						
+ 
+											  
+ 
+					  
+ 
+				
+
+															  
+						  
+											  
+ 
+ 
+				  
 	ret
 
 INCLUDE "data/battle/critical_hit_moves.asm"
@@ -5367,25 +5426,26 @@ MoveHitTest:
 .dreamEaterCheck
 	ld a, [de]
 	cp DREAM_EATER_EFFECT
-	jr nz, .swiftCheck
+	jr nz, .checkForDigOrFlyStatus
 	ld a, [bc]
 	and SLP_MASK
 	jp z, .moveMissed
+	.checkForDigOrFlyStatus
+	bit INVULNERABLE, [hl]
+	jp nz, .moveMissed
 .swiftCheck
 	ld a, [de]
 	cp SWIFT_EFFECT
 	ret z ; Swift never misses (this was fixed from the Japanese versions)
 	call CheckTargetSubstitute ; substitute check (note that this overwrites a)
-	jr z, .checkForDigOrFlyStatus
+	jr z, .noSubstitute
 ; The fix for Swift broke this code. It's supposed to prevent HP draining moves from working on Substitutes.
 ; Since CheckTargetSubstitute overwrites a with either $00 or $01, it never works.
 	cp DRAIN_HP_EFFECT
 	jp z, .moveMissed
 	cp DREAM_EATER_EFFECT
 	jp z, .moveMissed
-.checkForDigOrFlyStatus
-	bit INVULNERABLE, [hl]
-	jp nz, .moveMissed
+.noSubstitute
 	ldh a, [hWhoseTurn]
 	and a
 	jr nz, .enemyTurn
@@ -5819,6 +5879,7 @@ CheckEnemyStatusConditions:
 .wokeUp
 	ld hl, WokeUpText
 	call PrintText
+	jr z, .checkIfFrozen
 .sleepDone
 	xor a
 	ld [wEnemyUsedMove], a
@@ -6254,12 +6315,15 @@ LoadEnemyMonData:
 	ld a, [wEnemyMonSpecies2]
 	ld [wd11e], a
 	predef IndexToPokedex
+	call IsGhostBattle
+	jr z, .noMarkSeen
 	ld a, [wd11e]
 	dec a
 	ld c, a
 	ld b, FLAG_SET
 	ld hl, wPokedexSeen
 	predef FlagActionPredef ; mark this mon as seen in the pokedex
+	.noMarkSeen
 	ld hl, wEnemyMonLevel
 	ld de, wEnemyMonUnmodifiedLevel
 	ld bc, 1 + NUM_STATS * 2
@@ -6327,12 +6391,21 @@ SwapPlayerAndEnemyLevels:
 LoadPlayerBackPic:
 	ld a, [wBattleType]
 	dec a ; is it the old man tutorial?
-	ld de, RedPicBack
-	jr nz, .next
-	ld de, OldManPicBack
-.next
-	ld a, BANK(RedPicBack)
-	ASSERT BANK(RedPicBack) == BANK(OldManPicBack)
+	ld de, OldManPicBack   ; Load the old man back sprite preemptively
+               ld a, BANK(RedPicBack) ; Default Red back sprite will be used as a means to load in the Old Man back sprite
+    		jr z, .next
+    		ld a, [wPlayerGender]
+    		and a
+    		jr z, .RedBack
+    		ld de, GreenPicBack
+               ld a, BANK(GreenPicBack) ; Load female back sprite
+    		jr .next
+	.RedBack
+    		ld de, RedPicBack ; Load default Red back sprite
+               ld a, BANK(RedPicBack)
+	.next
+               ASSERT BANK(GreenPicBack) == BANK(OldManPicBack) ; These two ASSERTs make sure to cover
+               ASSERT BANK(RedPicBack) == BANK(OldManPicBack)   ; both sprite cases
 	call UncompressSpriteFromDE
 	predef ScaleSpriteByTwo
 	ld hl, wShadowOAM
@@ -6817,17 +6890,7 @@ InitBattleCommon:
 	ld [wIsInBattle], a
 	jp _InitBattleCommon
 
-InitWildBattle:
-	ld a, $1
-	ld [wIsInBattle], a
-	call LoadEnemyMonData
-	call DoBattleTransitionAndInitBattleVariables
-	ld a, [wCurOpponent]
-	cp RESTLESS_SOUL
-	jr z, .isGhost
-	call IsGhostBattle
-	jr nz, .isNoGhost
-.isGhost
+LoadGhostPic:
 	ld hl, wMonHSpriteDim
 	ld a, $66
 	ld [hli], a   ; write sprite dimensions
@@ -6855,6 +6918,19 @@ InitWildBattle:
 	call LoadMonFrontSprite ; load ghost sprite
 	pop af
 	ld [wcf91], a
+	ret
+InitWildBattle:
+	ld a, $1
+	ld [wIsInBattle], a
+	call LoadEnemyMonData
+	call DoBattleTransitionAndInitBattleVariables
+	ld a, [wCurOpponent]
+	cp RESTLESS_SOUL
+	jr z, .isGhost
+	call IsGhostBattle
+	jr nz, .isNoGhost
+.isGhost
+call LoadGhostPic
 	jr .spriteLoaded
 .isNoGhost
 	ld de, vFrontPic
@@ -7037,12 +7113,16 @@ LoadMonBackPic:
 	call ClearScreenArea
 	ld hl,  wMonHBackSprite - wMonHeader
 	call UncompressMonSprite
-	predef ScaleSpriteByTwo
-	ld de, vBackPic
-	call InterlaceMergeSpriteBuffers ; combine the two buffers to a single 2bpp sprite
+	call LoadBackSpriteUnzoomed
 	ld hl, vSprites
 	ld de, vBackPic
 	ld c, (2 * SPRITEBUFFERSIZE) / 16 ; count of 16-byte chunks to be copied
 	ldh a, [hLoadedROMBank]
 	ld b, a
 	jp CopyVideoData
+
+LoadBackSpriteUnzoomed:
+	ld a, $66
+	ld de, vBackPic
+	push de
+	jp LoadUncompressedBackSprite

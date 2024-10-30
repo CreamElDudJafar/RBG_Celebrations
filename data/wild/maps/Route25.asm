@@ -1,16 +1,16 @@
 Route25WildMons:
 	def_grass_wildmons 15 ; encounter rate
-IF DEF(_RED)
+IF (DEF(_RED) || DEF(_GREEN)) 
 	db  8, WEEDLE
 	db  9, KAKUNA
 	db 13, PIDGEY
 	db 12, ODDISH
 	db 13, ODDISH
 	db 12, ABRA
-	db 14, ODDISH
+	db 14, BELLSPROUT
 	db 10, ABRA
-	db  7, METAPOD
-	db  8, CATERPIE
+	db  10, CHARMANDER
+	db  12, CHARMANDER
 ENDC
 IF DEF(_BLUE)
 	db  8, CATERPIE
@@ -19,10 +19,10 @@ IF DEF(_BLUE)
 	db 12, BELLSPROUT
 	db 13, BELLSPROUT
 	db 12, ABRA
-	db 14, BELLSPROUT
+	db 14, ODDISH
 	db 10, ABRA
-	db  7, KAKUNA
-	db  8, WEEDLE
+	db  10, CHARMANDER
+	db  12, CHARMANDER
 ENDC
 	end_grass_wildmons
 

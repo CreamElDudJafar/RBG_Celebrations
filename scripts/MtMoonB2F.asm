@@ -255,9 +255,6 @@ MtMoonB2FDomeFossilText:
 	ld [wMissableObjectIndex], a
 	predef HideObject
 	SetEvent EVENT_GOT_DOME_FOSSIL
-	ld a, SCRIPT_MTMOONB2F_MOVE_SUPER_NERD
-	ld [wMtMoonB2FCurScript], a
-	ld [wCurMapScript], a
 .done
 	jp TextScriptEnd
 
@@ -283,9 +280,6 @@ MtMoonB2FHelixFossilText:
 	ld [wMissableObjectIndex], a
 	predef HideObject
 	SetEvent EVENT_GOT_HELIX_FOSSIL
-	ld a, SCRIPT_MTMOONB2F_MOVE_SUPER_NERD
-	ld [wMtMoonB2FCurScript], a
-	ld [wCurMapScript], a
 .done
 	jp TextScriptEnd
 
