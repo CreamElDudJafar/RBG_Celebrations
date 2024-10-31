@@ -164,10 +164,6 @@ INCLUDE "crysaudio/cry_pointers.asm"
 INCLUDE "crysaudio/sfx_pointers_red.asm"
 ;INCLUDE "crysaudio/sfx_pointers.asm"
 
-SECTION "Fade Audio", ROMX
-
-INCLUDE "audio/fade_audio.asm"
-
 SECTION "Songs 1", ROMX
 
 INCLUDE "crysaudio/music/route36.asm"
