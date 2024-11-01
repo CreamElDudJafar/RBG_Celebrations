@@ -11,6 +11,7 @@ It builds the following ROMs:
 - dmgapee0.e68.patch
 
 Some FEATURES:
+- Main branch: Gen 1 Audio. CrysAudio: Gen 2 Audio
 - Now you can Play Gen1 as a girl!
  - All 151 Pokémons can be caught or evolved without trading
  - Mew Under the Truck event restored
@@ -28,7 +29,7 @@ Some FEATURES:
 - Learnsets updated to match Pokemon Yellow updated one (eg. nidoran learns double kick at lower level) 
 - Several POKÉMON had learnsets buffs (eg: Charizard Fly) - Pikachu and Raichu can learn SURF through HM, just like in Yellow version
  - PROF. OAK gives you 5 POKÉBALLS when you receive the POKÉDEX. - TM names in BAG and MART (TM24 it says TM24 THNDRBLT)
- - 50 item bag space - Auto HM use (eg: surf, just touch the water and say YES)
+ - 50 item bag space/ 20 item bag space in CrysAudio branch
  - Auto HM use (eg: surf, just touch the water and say YES)
  - Deletable HM's - Sort Items in BAG 
 - OAK Battle post game - Message when PC is full
