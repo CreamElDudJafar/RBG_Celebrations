@@ -104,9 +104,15 @@ ENDC
 	ld [hl], a
 
 ; place tiles for title screen copyright
+IF DEF(_GREEN)
+	hlcoord 3, 17
+	ld de, .tileScreenCopyrightTiles
+	ld b, $0E
+ELSE
 	hlcoord 2, 17
 	ld de, .tileScreenCopyrightTiles
 	ld b, $10
+ENDC
 .tileScreenCopyrightTilesLoop
 	ld a, [de]
 	ld [hli], a
@@ -117,7 +123,11 @@ ENDC
 	jr .next
 
 .tileScreenCopyrightTiles
+IF DEF(_GREEN)
+	db $45,$41,$42,$43,$44,$46,$47,$48,$49,$4A,$4B,$4C,$4D,$4E,$45,$45 ; ©1995 GAME FREAK inc.
+ELSE
 	db $41,$42,$43,$42,$44,$42,$45,$46,$47,$48,$49,$4A,$4B,$4C,$4D,$4E ; ©'95.'96.'98 GAME FREAK inc.
+ENDC
 
 .next
 	call SaveScreenTilesToBuffer2
@@ -401,10 +411,17 @@ LoadCopyrightTiles:
 	jp PlaceString
 
 CopyrightTextString:
+IF DEF(_GREEN)
+	db   $7F,$7F,$7F,$60,$61,$62,$63,$65,$66,$67,$68,$69,$6A             ; ©1995 Nintendo
+	next $7F,$7F,$7F,$60,$61,$62,$63,$6B,$6C,$6D,$6E,$6F,$70,$71,$72     ; ©1995 Creatures inc.
+	next $7F,$7F,$7F,$60,$61,$62,$63,$73,$74,$75,$76,$77,$78,$79,$7A,$7B ; ©1995 GAME FREAK inc.
+	db   "@"
+ELSE
 	db   $60,$61,$62,$61,$63,$61,$64,$7F,$65,$66,$67,$68,$69,$6A             ; ©'95.'96.'98 Nintendo
 	next $60,$61,$62,$61,$63,$61,$64,$7F,$6B,$6C,$6D,$6E,$6F,$70,$71,$72     ; ©'95.'96.'98 Creatures inc.
 	next $60,$61,$62,$61,$63,$61,$64,$7F,$73,$74,$75,$76,$77,$78,$79,$7A,$7B ; ©'95.'96.'98 GAME FREAK inc.
 	db   "@"
+ENDC
 
 INCLUDE "data/pokemon/title_mons.asm"
 
