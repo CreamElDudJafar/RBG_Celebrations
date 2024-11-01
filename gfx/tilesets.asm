@@ -1,6 +1,10 @@
 SECTION "Tilesets 1", ROMX
 
+IF DEF(_GREEN)
+Overworld_GFX::     INCBIN "gfx/tilesets/tilesets_rg/overworld.2bpp"
+ELSE	
 Overworld_GFX::     INCBIN "gfx/tilesets/overworld.2bpp"
+ENDC
 Overworld_Block::   INCBIN "gfx/blocksets/overworld.bst"
 
 RedsHouse1_GFX::
