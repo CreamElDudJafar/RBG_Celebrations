@@ -426,13 +426,25 @@ UpdateMovingBgTiles::
 	ldh [hMovingBGTilesCounter1], a
 
 	ld a, [wMovingBGTilesCounter2]
-	and 3
+IF DEF(_GREEN)
+	and 2
 	cp 2
+ELSE
+	and 3
+	cp 1
+ENDC
+
+IF DEF(_GREEN)
+	ld hl, FlowerTile1
+	jr c, .copy
+	ld hl, FlowerTile2
+ELSE
 	ld hl, FlowerTile1
 	jr c, .copy
 	ld hl, FlowerTile2
 	jr z, .copy
 	ld hl, FlowerTile3
+ENDC
 .copy
 	ld de, vTileset tile $03
 	ld c, $10
@@ -444,6 +456,11 @@ UpdateMovingBgTiles::
 	jr nz, .loop
 	ret
 
+IF DEF(_GREEN)
+FlowerTile1: INCBIN "gfx/tilesets/tilesets_rg/flower1.2bpp"
+FlowerTile2: INCBIN "gfx/tilesets/tilesets_rg/flower2.2bpp"
+ELSE
 FlowerTile1: INCBIN "gfx/tilesets/flower/flower1.2bpp"
 FlowerTile2: INCBIN "gfx/tilesets/flower/flower2.2bpp"
 FlowerTile3: INCBIN "gfx/tilesets/flower/flower3.2bpp"
+ENDC
