@@ -48,6 +48,7 @@ Forest_GFX::        INCBIN "gfx/tilesets/tilesets_rg/forest.2bpp"
 ELSE
 Forest_GFX::        INCBIN "gfx/tilesets/forest.2bpp"
 ENDC
+Forest_Block::      INCBIN "gfx/blocksets/forest.bst"
 Facility_GFX::      INCBIN "gfx/tilesets/facility.2bpp"
 Facility_Block::    INCBIN "gfx/blocksets/facility.bst"
 
