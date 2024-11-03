@@ -12,6 +12,7 @@ It builds the following ROMs:
 
 Some FEATURES:
 - Main branch: Gen 1 Audio. CrysAudio: Gen 2 Audio
+- GREEN: Features restored, SGB Border, Flowers, Overworld and more!
 - Now you can Play Gen1 as a girl!
  - All 151 Pokémons can be caught or evolved without trading
  - Mew Under the Truck event restored
