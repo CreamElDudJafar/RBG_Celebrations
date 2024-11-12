@@ -8,35 +8,35 @@ NameRatersHouseYesNoScript:
 	and a
 	ret
 
-NameRatersHouseCheckMonOTScript:
+; NameRatersHouseCheckMonOTScript:
 ; return carry if mon's OT name or OT ID do not match the player's
-	ld hl, wPartyMonOT
-	ld bc, NAME_LENGTH
-	ld a, [wWhichPokemon]
-	call AddNTimes
-	ld de, wPlayerName
-	ld c, NAME_LENGTH
-	call .check_match_loop
-	jr c, .no_match
-	ld hl, wPartyMon1OTID
-	ld bc, wPartyMon2 - wPartyMon1
-	ld a, [wWhichPokemon]
-	call AddNTimes
-	ld de, wPlayerID
-	ld c, $2
-.check_match_loop
-	ld a, [de]
-	cp [hl]
-	jr nz, .no_match
-	inc hl
-	inc de
-	dec c
-	jr nz, .check_match_loop
-	and a
-	ret
-.no_match
-	scf
-	ret
+; ld hl, wPartyMonOT
+; ld bc, NAME_LENGTH
+; ld a, [wWhichPokemon]
+; call AddNTimes
+; ld de, wPlayerName
+; ld c, NAME_LENGTH
+; call .check_match_loop
+; jr c, .no_match
+; ld hl, wPartyMon1OTID
+; ld bc, wPartyMon2 - wPartyMon1
+; ld a, [wWhichPokemon]
+; call AddNTimes
+; ld de, wPlayerID
+; ld c, $2
+; .check_match_loop
+; ld a, [de]
+; cp [hl]
+; jr nz, .no_match
+; inc hl
+; inc de
+; dec c
+; jr nz, .check_match_loop
+; and a
+; ret
+; .no_match
+; scf
+( ret
 
 NameRatersHouse_TextPointers:
 	def_text_pointers
@@ -62,9 +62,9 @@ NameRatersHouseNameRaterText:
 	pop af
 	jr c, .did_not_rename
 	call GetPartyMonName2
-	call NameRatersHouseCheckMonOTScript
-	ld hl, .ATrulyImpeccableNameText
-	jr c, .done
+; call NameRatersHouseCheckMonOTScript
+; ld hl, .ATrulyImpeccableNameText
+; jr c, .done
 	ld hl, .GiveItANiceNameText
 	call NameRatersHouseYesNoScript
 	jr nz, .did_not_rename
