@@ -36,7 +36,7 @@ NameRatersHouseYesNoScript:
 ; ret
 ; .no_match
 ; scf
-( ret
+; ret
 
 NameRatersHouse_TextPointers:
 	def_text_pointers
