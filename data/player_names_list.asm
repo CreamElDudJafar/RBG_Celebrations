@@ -55,5 +55,5 @@ DefaultNamesRivalList:
 	db "NEW NAME@"
 	db "RED@"
 	db "ASH@"
-	db "JOHNK@"
+	db "JOHN@"
 ENDC
