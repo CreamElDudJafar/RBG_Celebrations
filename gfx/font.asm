@@ -38,3 +38,6 @@ PlayerCharacterTitleGraphics: INCBIN "gfx/title/player_green.2bpp"
 ENDC
 PlayerCharacterTitleGraphicsEnd:
 
+EXPBarGraphics::  INCBIN "gfx/battle/exp_bar.2bpp"
+EXPBarGraphicsEnd::
+

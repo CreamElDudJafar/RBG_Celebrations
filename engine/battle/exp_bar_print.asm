@@ -269,7 +269,3 @@ BattleMonPartyAttr:
 	ld bc, wPartyMon2 - wPartyMon1
 	jp AddNTimes
 
-
-;joenote - adding exp bar
-EXPBarGraphics::  INCBIN "gfx/exp_bar.2bpp"
-EXPBarGraphicsEnd::
