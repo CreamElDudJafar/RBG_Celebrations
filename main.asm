@@ -95,9 +95,6 @@ INCLUDE "engine/battle/move_effects/haze.asm"
 INCLUDE "engine/battle/get_trainer_name.asm"
 INCLUDE "engine/math/random.asm"
 
-EXPBarGraphics::  INCBIN "gfx/exp_bar.2bpp"
-EXPBarGraphicsEnd::
-
 
 SECTION "Battle Engine 2", ROMX
 
