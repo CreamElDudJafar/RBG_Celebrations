@@ -271,5 +271,5 @@ BattleMonPartyAttr:
 
 
 ;joenote - adding exp bar
-EXPBarGraphics::  INCBIN "gfx/battle/exp_bar.2bpp"
+EXPBarGraphics::  INCBIN "gfx/exp_bar.2bpp"
 EXPBarGraphicsEnd::
