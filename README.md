@@ -44,6 +44,8 @@ Some FEATURES:
  - Removed 25% chance for enemy stat down moves to miss 
 - Swift will not hit throught Fly or Dig - Ghost now deals SUPER EFFECTIVE on Psychic Pokémon
 - Gym Leader rematches after E4
+- Can Push Up and Down on Stat Screen to switch Pokemon
+- Can teleport inside buildings and caves
 
 CREDITS: IF ANYONE IS MISSED PLEASE LET ME KNOW. IT’S HARD TO KEEP TRACK OF ALL CREDITS SINCE THIS HACK WAS STARTED BY ONE PERSON AND THEN FINISHED/TAKEN OVER BY ANOTHER…. BUT WE WILL GLADLY ADD YOU IN 😊.
 
