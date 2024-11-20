@@ -2,6 +2,7 @@ SECTION "bank1", ROMX
 
 INCLUDE "data/sprites/facings.asm"
 INCLUDE "engine/events/black_out.asm"
+INCLUDE "data/pokemon/mew.asm" 
 INCLUDE "engine/battle/safari_zone.asm"
 INCLUDE "engine/movie/title.asm"
 INCLUDE "engine/pokemon/load_mon_data.asm"
@@ -361,7 +362,6 @@ SECTION "Engine Spillover", ROMX
 
 INCLUDE "engine/menus/item_descriptions.asm"
 INCLUDE "engine/overworld/use_another_repel.asm"
-INCLUDE "engine/battle/move_effects/drain_hp.asm"
-INCLUDE "data/pokemon/mew.asm" 
+INCLUDE "engine/battle/move_effects/drain_hp.asm" ; Moved from Bank1
 INCLUDE "engine/pokemon/evos_moves.asm"
 
