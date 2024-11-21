@@ -42,12 +42,24 @@ ViridianCityYoungster2CaterpieAndWeedleDescriptionText::
 	line "POISON STING!"
 	done
 
+IF DEF(_GREEN)
+_ViridianCityGirlHasntHadHisCoffeeYetText::
+	text "Oh Grandpa! Don't"
+	line "pass out here!"
+	cont "My goodness..."
+	cont "Sorry, but we'll"
+	cont "have to wait till"
+	cont "he sobers up."
+	done
+	
+ELSE
 _ViridianCityGirlHasntHadHisCoffeeYetText::
 	text "Oh Grandpa! Don't"
 	line "be so mean!"
 	cont "He hasn't had his"
 	cont "coffee yet."
 	done
+ENDC
 
 _ViridianCityGirlWhenIGoShopText::
 	text "When I go shop in"
@@ -57,6 +69,18 @@ _ViridianCityGirlWhenIGoShopText::
 	cont "VIRIDIAN FOREST."
 	done
 
+IF DEF(_GREEN)
+_ViridianCityOldManSleepyPrivatePropertyText::
+	text "Urgh! Hic..."
+	line "hold on there!"
+	cont "C'mere an lissen"
+	cont "to what I hafta"
+	cont "say!"
+
+	para "...Hey!"
+	line "I said don't go!"
+	done
+ELSE
 _ViridianCityOldManSleepyPrivatePropertyText::
 	text "You can't go"
 	line "through here!"
@@ -64,6 +88,7 @@ _ViridianCityOldManSleepyPrivatePropertyText::
 	para "This is private"
 	line "property!"
 	done
+ENDC
 
 ViridianCityFisherYouCanHaveThisText::
 	text "Yawn!"
@@ -98,6 +123,18 @@ _ViridianCityFisherTM42NoRoomText::
 	line "stuff already."
 	done
 
+IF DEF(_GREEN)
+_ViridianCityOldManHadMyCoffeeNowText::
+	text "Mmm......"
+	line "Seems like I was"
+	cont "pretty drunk!"
+
+	para "My head hurts..."
+
+	para "Are you in a"
+	line "hurry?"
+	done
+ELSE
 _ViridianCityOldManHadMyCoffeeNowText::
 	text "Ahh, I've had my"
 	line "coffee now and I"
@@ -109,6 +146,7 @@ _ViridianCityOldManHadMyCoffeeNowText::
 	para "Are you in a"
 	line "hurry?"
 	done
+ENDC
 
 _ViridianCityOldManKnowHowToCatchPokemonText::
 	text "I see you're using"
