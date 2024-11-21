@@ -5438,7 +5438,7 @@ MoveHitTest:
 	ld a, [bc]
 	and SLP_MASK
 	jp z, .moveMissed
-	.checkForDigOrFlyStatus
+.checkForDigOrFlyStatus
 	bit INVULNERABLE, [hl]
 	jp nz, .moveMissed
 .swiftCheck
