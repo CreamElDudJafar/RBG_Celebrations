@@ -1343,9 +1343,16 @@ AdjustOAMBlockYPos2:
 	add b
 	cp 112
 	jr c, .skipSettingPreviousEntrysAttribute
-	dec hl
-	ld a, 160 ; bug, sets previous OAM entry's attribute
-	ld [hli], a
+; dec hl
+		;; Previous byte in HL is the attributes byte of the tile
+		; bit 7 - OBJ-BG-Priority 1=OBJ Behind BG color 1-3
+		; bit 6 - Y-Flip 1=Mirrored
+		; bit 5 - X-Flip 1=Mirrored
+		; bit 4 - PaletteNumber **Non CGB Mode Only** 0=OBP0, 1=OBP1
+		; bit 3 - Tile VRAMBank **CGB Mode ONly** 0=Bank 0, 1=Bank 1
+		; bit 2 to 0 - Palette number **CGB mode Only** %000 = OBP0
+	ld a, 160 ; if "dec hl" as originally : bug, sets previous OAM entry's attribute
+;	ld [hli], a
 .skipSettingPreviousEntrysAttribute
 	ld [hl], a
 	add hl, de
