@@ -1919,7 +1919,9 @@ wBagItems:: ds BAG_ITEM_CAPACITY * 2 + 1 ; now holds 50 items
 wUniQuizAnswer:: db
 ds 2
 
-; 25 bytes left to use
+wSum:: db
+
+; 24 bytes left to use
 
 ENDU
 ;;;;;;;;;;
