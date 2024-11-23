@@ -491,9 +491,6 @@ ShowPokedexDataInternal:
 	ld a, $77 ; max volume
 	ldh [rNR50], a
 	ret
-.displaySeenBottomInfo:
-	call PrintMonTypes ; PureRGBnote: ADDED: for pokemon you have seen but not caught it displays just their types on the bottom
-	jr .waitForButtonPress
 
 PrintMonTypes:
 	hlcoord 1, 11
@@ -1111,8 +1108,6 @@ IndexToPokedex:
 	pop bc
 	ret
 
-INCLUDE "data/pokemon/dex_order.asm"
-
 PromptText:
 	text_promptbutton
 	text_end
@@ -1134,3 +1129,7 @@ SpcText:
 	db "SPC@"
 TotalText:
 	db "TOTAL@"
+
+
+INCLUDE "data/pokemon/dex_order.asm"
+
