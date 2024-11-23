@@ -95,6 +95,7 @@ SpriteSheetPointerTable:
 	overworld_sprite PikaSprite, 12             ; SPRITE_PIKA
 	overworld_sprite ZapSprite, 12             ; SPRITE_ZAP
 	overworld_sprite VoltorbSprite, 12         ; SPRITE_VOLTORB
+	overworld_sprite KabutoSprite, 12          ; SPRITE_KABUTO
 	overworld_sprite PikadollSprite, 12             ; SPRITE_PIKADOLL
 	overworld_sprite JiggdollSprite, 12             ; SPRITE_JIGGDOLL
 	overworld_sprite BrockSprite, 12
