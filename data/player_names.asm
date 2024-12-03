@@ -47,7 +47,7 @@ IF DEF(_GREEN)
 DefaultNamesPlayer:
 	db   "NEW NAME"
 	next "GREEN"
-	next "GARY"
+	next "ASH"
 	next "JIM"
 	db   "@"
 	
@@ -61,7 +61,7 @@ DefaultNamesGirl:
 DefaultNamesRival:
 	db   "NEW NAME"
 	next "RED"
-	next "ASH"
+	next "GARY"
 	next "JOHN"
 	db   "@"
 ENDC
