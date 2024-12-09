@@ -4,10 +4,12 @@ DefaultNamesPlayerList:
 	db "RED@"
 	db "ASH@"
 	db "JIM@"
+	db "MAT@"
 	
 DefaultNamesGirlList:
     	db "NEW NAME@"
-   	 db "GREEN@"
+	db "AMANDA"
+   	db "GREEN@"
    	db "LEAF@"
     	db "BRI@"
 
@@ -16,6 +18,7 @@ DefaultNamesRivalList:
 	db "BLUE@"
 	db "GARY@"
 	db "JOHN@"
+	db "CHRIS@"
 ENDC
 
 IF DEF(_BLUE)
@@ -24,9 +27,11 @@ DefaultNamesPlayerList:
 	db "BLUE@"
 	db "GARY@"
 	db "JIM@"
+	db "JOHN@"
 	
 DefaultNamesGirlList:
     	db "NEW NAME@"
+	db "AMANDA@"
    	db "GREEN@"
    	db "LEAF@"
     	db "BRI@"
@@ -36,6 +41,7 @@ DefaultNamesRivalList:
 	db "RED@"
 	db "ASH@"
 	db "JACK@"
+	db "ZEKE@"
 ENDC
 
 IF DEF(_GREEN)
@@ -44,9 +50,11 @@ DefaultNamesPlayerList:
 	db "GREEN@"
 	db "ASH@"
 	db "JIM@"
+	db "BANE@"
 	
 DefaultNamesGirlList:
     	db "NEW NAME@"
+	db "AMANDA"
    	db "GREEN@"
    	db "LEAF@"
     	db "BRI@"
@@ -56,4 +64,5 @@ DefaultNamesRivalList:
 	db "RED@"
 	db "GARY@"
 	db "JOHN@"
+	db "PHIL@"
 ENDC
