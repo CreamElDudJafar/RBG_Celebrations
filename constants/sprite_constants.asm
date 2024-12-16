@@ -100,6 +100,7 @@
 	const SPRITE_ERIKA
 	const SPRITE_SABRINA
 	const SPRITE_BLAINE
+	const SPRITE_BILL
 DEF FIRST_STILL_SPRITE EQU const_value
 	const SPRITE_POKE_BALL               ; $3d
 	const SPRITE_FOSSIL                  ; $3e
