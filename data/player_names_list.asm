@@ -8,7 +8,7 @@ DefaultNamesPlayerList:
 	
 DefaultNamesGirlList:
     	db "NEW NAME@"
-	db "AMANDA"
+	db "ALYSSA@"
    	db "GREEN@"
    	db "LEAF@"
     	db "BRI@"
@@ -31,7 +31,7 @@ DefaultNamesPlayerList:
 	
 DefaultNamesGirlList:
     	db "NEW NAME@"
-	db "AMANDA@"
+	db "ALYSSA@"
    	db "GREEN@"
    	db "LEAF@"
     	db "BRI@"
@@ -54,7 +54,7 @@ DefaultNamesPlayerList:
 	
 DefaultNamesGirlList:
     	db "NEW NAME@"
-	db "AMANDA"
+	db "ALYSSA@"
    	db "GREEN@"
    	db "LEAF@"
     	db "BRI@"

@@ -9,7 +9,7 @@ DefaultNamesPlayer:
 	
 DefaultNamesGirl:
   	db   "NEW NAME"
-	next "AMANDA"
+	next "ALYSSA"
    	next "GREEN"
     	next "LEAF"
     	next "BRI"
@@ -35,7 +35,7 @@ DefaultNamesPlayer:
 	
 DefaultNamesGirl:
   	db   "NEW NAME"
-	next "AMANDA"
+	next "ALYSSA"
    	next "GREEN"
     	next "LEAF"
     	next "BRI"
@@ -60,7 +60,7 @@ DefaultNamesPlayer:
 	
 DefaultNamesGirl:
   	db   "NEW NAME"
-	next "AMANDA"
+	next "ALYSSA"
    	next "GREEN"
     	next "LEAF"
     	next "BRI"
