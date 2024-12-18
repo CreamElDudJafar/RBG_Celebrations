@@ -5,21 +5,21 @@ Route10WildMons:
 	db 14, KRABBY
 IF (DEF(_RED) || DEF(_GREEN)) 
 	db 11, EKANS
-	db 14, KRABBY
+	db 14, VULPIX
 	db 15, EKANS
 	db 17, VOLTORB
 	db 18, MAGNEMITE
-	db 15, ELECTABUZZ
-	db 20, ELECTABUZZ
+	db 17, ABRA
+	db 20, POLIWAG
 ENDC
 IF DEF(_BLUE)
 	db 11, SANDSHREW
-	db 14, KRABBY
+	db 14, VULPIX
 	db 15, SANDSHREW
 	db 17, VOLTORB
 	db 18, MAGNEMITE
-	db 15, ELECTABUZZ
-	db 20, ELECTABUZZ
+	db 17, ABRA
+	db 20, POLIWAG
 ENDC
 	end_grass_wildmons
 

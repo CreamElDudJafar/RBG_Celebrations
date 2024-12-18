@@ -186,7 +186,6 @@ INCLUDE "engine/slots/game_corner_slots.asm"
 SECTION "Battle Engine 7", ROMX
 
 INCLUDE "data/moves/moves.asm"
-INCLUDE "data/pokemon/base_stats.asm"
 INCLUDE "data/pokemon/cries.asm"
 INCLUDE "engine/battle/unused_stats_functions.asm"
 INCLUDE "engine/battle/scroll_draw_trainer_pic.asm"
@@ -196,7 +195,6 @@ INCLUDE "gfx/trade.asm"
 INCLUDE "engine/battle/move_effects/heal.asm"
 INCLUDE "engine/battle/move_effects/transform.asm"
 INCLUDE "engine/battle/move_effects/reflect_light_screen.asm"
-INCLUDE "data/pokemon/copy_base_stats.asm"
 
 
 SECTION "Battle Core", ROMX
@@ -363,5 +361,9 @@ SECTION "Engine Spillover", ROMX
 INCLUDE "engine/menus/item_descriptions.asm"
 INCLUDE "engine/overworld/use_another_repel.asm"
 INCLUDE "engine/battle/move_effects/drain_hp.asm" ; Moved from Bank1
-INCLUDE "engine/pokemon/evos_moves.asm"
 
+
+SECTION "Evo Moves", ROMX
+
+INCLUDE "data/pokemon/base_stats.asm"
+INCLUDE "engine/pokemon/evos_moves.asm"

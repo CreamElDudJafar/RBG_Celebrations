@@ -158,7 +158,13 @@ Evolution_PartyMonLoop: ; loop over party mons
 	ld a, [wd0b5]
 	ld [wd11e], a
 	predef IndexToPokedex
-	callfar CopyBaseStats
+	ld a, [wd11e]
+	dec a
+	ld hl, BaseStats
+	ld bc, BASE_DATA_SIZE
+	call AddNTimes
+	ld de, wMonHeader
+	call CopyData
 	ld a, [wd0b5]
 	ld [wMonHIndex], a
 	pop af
