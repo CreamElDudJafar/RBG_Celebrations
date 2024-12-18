@@ -492,23 +492,27 @@ SpecialTrainerMoves:
     	db 1, 1, HYPER_BEAM
     	db 1, 2, EARTHQUAKE
     	db 1, 3, BLIZZARD
-    	db 1, 4, THUNDER
-    	db 2, 1, FIRE_BLAST
-    	db 2, 2, EARTHQUAKE
-    	db 2, 3, SLASH
-    	db 2, 4, DOUBLE_TEAM
-    	db 3, 2, SWORDS_DANCE
-    	db 3, 3, EARTHQUAKE
-	db 3, 4, SLEEP_POWDER
-    	db 4, 1, REFLECT
-    	db 4, 2, EARTHQUAKE
-	db 5, 2, REST
-    	db 5, 2, AMNESIA
-    	db 5, 3, PSYCHIC_M
-    	db 6, 1, EARTHQUAKE
-    	db 6, 2, ROCK_SLIDE
-    	db 6, 3, SLUDGE
-    	db 6, 4, BLIZZARD
+    	db 1, 4, FIRE_BLAST
+    	db 2, 1, MEGA_DRAIN
+    	db 2, 2, SOFTBOILED
+    	db 2, 3, PSYCHIC_M
+    	db 2, 4, SOLARBEAM
+	db 3, 1, DIG
+    	db 3, 2, FLAMETHROWER
+    	db 3, 3, BODY_SLAM
+	db 3, 4, FIRE_BLAST
+    	db 4, 1, THUNDERBOLT
+    	db 4, 2, AMNESIA
+	db 4, 3, SELFDESTRUCT
+	db 4, 4, PSYCHIC_M
+	db 5, 1, DOUBLE_TEAM
+	db 5, 2, HYDRO_PUMP
+    	db 5, 3, THUNDERBOLT
+    	db 5, 3, FIRE_BLAST
+    	db 6, 1, ICE_BEAM
+    	db 6, 2, EARTHQUAKE
+    	db 6, 3, HORN_DRILL
+    	db 6, 4, SUBSTITUTE
     	db 0
 
 	db -1 ; end
